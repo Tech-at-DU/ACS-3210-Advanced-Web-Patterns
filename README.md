@@ -123,6 +123,6 @@ To pass this course you must meet the following requirements:
 [Building and Deploying a Node Module]: Lessons/NodeModules.md
 [Awesome Automations]: Lessons/Automations.md
 [James Beswick]: https://aws.amazon.com/blogs/compute/author/jbeswick/
-[Make Chat]: https://www.makeschool.com/academy/track/make-chat
-[Pete's Pets]: https://www.makeschool.com/academy/track/pete-s-pet-emporium---advanced-web-recipes
+[Make Chat]: https://makeschool.org/mediabook/oa/tutorials/make-chat/start-slacking/
+[Pete's Pets]: https://makeschool.org/mediabook/oa/tutorials/pete-s-pet-emporium---advanced-web-recipes/getting-started-V4Q=/
 [Gradescope]: https://www.gradescope.com/
