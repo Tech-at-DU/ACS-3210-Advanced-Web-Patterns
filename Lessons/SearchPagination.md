@@ -14,15 +14,12 @@
    1. [Why do we need pagination?](#why-do-we-need-pagination%3F)
    1. [Question](#question)
    1. [Activity: Technical Debate - Picking a Pagination Module](#activity%3A-technical-debate---picking-a-pagination-module)
-1. [Pagination Activity](#pagination-activity)
 1. [[**10m**] 🌴 BREAK {docsify-ignore}](#%5B%2a%2a10m%2a%2a%5D-%F0%9F%8C%B4-break-%7Bdocsify-ignore%7D)
-1. [Search](#search)
-1. [Simple Search](#simple-search)
-   1. [Sequelize](#sequelize)
-   1. [Activity](#activity)
+1. [[**20m**] Warm Up: Implement Pagination](#%5B%2a%2a20m%2a%2a%5D-warm-up%3A-implement-pagination)
+1. [[**20m**] TT: Search](#%5B%2a%2a20m%2a%2a%5D-tt%3A-search)
    1. [Mongoose](#mongoose)
-   1. [RegEx](#regex)
-1. [Search Activity](#search-activity)
+1. [[**10m**] 🌴 BREAK {docsify-ignore}](#%5B%2a%2a10m%2a%2a%5D-%F0%9F%8C%B4-break-%7Bdocsify-ignore%7D-1)
+1. [[**30m**] Activity: RegEx Challenges](#%5B%2a%2a30m%2a%2a%5D-activity%3A-regex-challenges)
 
 <!-- > -->
 
@@ -138,17 +135,19 @@ Throughout your career, you will have many technical debates with your teams. We
 
 <!-- > -->
 
-## Pagination Activity
-
-**TODO:** add small coding activity for pagination. Something like this: [https://medium.com/javascript-in-plain-english/simple-pagination-with-node-js-mongoose-and-express-4942af479ab2](https://medium.com/javascript-in-plain-english/simple-pagination-with-node-js-mongoose-and-express-4942af479ab2)
-
-<!-- > -->
 
 ## [**10m**] 🌴 BREAK {docsify-ignore}
 
 <!-- > -->
 
-## Search
+
+## [**20m**] Warm Up: Implement Pagination
+
+Follow along with [this tutorial](https://medium.com/javascript-in-plain-english/simple-pagination-with-node-js-mongoose-and-express-4942af479ab2) and write a simple pagination implementation in a sample project.
+
+<!-- > -->
+
+## [**20m**] TT: Search
 
 ![autocomplete](assets/autocomplete.gif)
 
@@ -162,30 +161,11 @@ Once we can search, we can then *paginate* the responses!
 
 <!-- > -->
 
-## Simple Search
-
-### Sequelize
-
-![sequelize](assets/sequelize.png)
-
-In order to conduct a simple search, we will use Sequelize's [query operators](https://sequelize.org/v4/manual/tutorial/querying.html#operators) `like` or `iLike` (PG only). These are basically equivalent except `iLike` is case insensitive and for Postgres databases only.
-
-<!-- v -->
-
-### Activity
-
-Go back and read through the [Sequelize Querying doc](https://sequelize.org/v4/manual/tutorial/querying.html), and answer the following:
-
-1. How would you use the `like` operator?
-1. Write a query that would find all objects with a `title` of `dog`
-
-<!-- > -->
-
 ### Mongoose
 
 ![mongoose](assets/mongoose.png)
 
-For mongoose, we can search by passing a Regex (regular expression) for the term we want to search for.
+In mongoose, we can search by passing a Regex (regular expression) for the term we want to search for.
 
 ```js
 User.find({ name: /john/i }, (err, docs) => { });
@@ -198,9 +178,13 @@ regex = new RegExp(`/${req.query.term}/i`);
 User.find({ name: regex }, (err, docs) => { });
 ```
 
-<!-- v -->
+<!--  -->
 
-### RegEx
+## [**10m**] 🌴 BREAK {docsify-ignore}
+
+<!--  -->
+
+## [**30m**] Activity: RegEx Challenges
 
 ![regex](assets/regex.jpeg)
 
@@ -219,6 +203,3 @@ Make sure to run it against test inputs!
 
 <!-- > -->
 
-## Search Activity
-
-**TODO:** a search activity, maybe something like this tutorial: [https://kb.objectrocket.com/mongo-db/mongoose-partial-text-search-606](https://kb.objectrocket.com/mongo-db/mongoose-partial-text-search-606)
