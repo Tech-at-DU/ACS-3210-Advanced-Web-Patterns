@@ -48,18 +48,18 @@ In this course students deepen their understanding of the web and implement adva
 
 | Class |                                                                          Topics                                                                           |
 | :---: | :-------------------------------------------------------------------------------------------------------------------------------------------------------: |
-|   1   |                                                                   [Pagination & Search]                                                                   |
-|   2   |                                                                     [Sending Emails]                                                                      |
-|   3   |                                                                    [Payment Gateways]                                                                     |
-|   4   |                                                                [Introduction to Amazon S3]                                                                |
-|   5   |                                                             [Getting Started with Serverless]                                                             |
-|   6   |                                                                 [Serverless Architecture]                                                                 |
-|   7   | **[Serverless IRL] + Guest Speaker ([Slides](assets/MakeSchoolServerless.pdf))**<br><small>🎤 **[James Beswick]** _(Sr. Developer Advocate @ AWS)</small>_ |
-|   8   |                                                            [Intro to WebSockets] / [Make Chat]                                                            |
-|   9   |                                                                 [Working With WebSockets]                                                                 |
-|  10   |                                                          [Building and Deploying a Node Module]                                                           |
-|  11   |                                                             [Awesome Automations] + Lab Time                                                              |
-|  12   |                                                                          Lab Day                                                                          |
+|   1   |                                                              [Course Overview / Pagination]                                                               |
+|   2   |                                                                         [Search]                                                                          |
+|   3   |                                                                     [Sending Emails]                                                                      |
+|   4   |                                                                    [Payment Gateways]                                                                     |
+|   5   |                                                                [Introduction to Amazon S3]                                                                |
+|   6   |                                                             [Getting Started with Serverless]                                                             |
+|   7   |                                                                 [Serverless Architecture]                                                                 |
+|   8   | **[Serverless IRL] + Guest Speaker ([Slides](assets/MakeSchoolServerless.pdf))**<br><small>🎤 **[James Beswick]** _(Sr. Developer Advocate @ AWS)</small>_ |
+|   9   |                                                            [Intro to WebSockets] / [Make Chat]                                                            |
+|  10   |                                                                 [Working With WebSockets]                                                                 |
+|  11   |                                                          [Building and Deploying a Node Module]                                                           |
+|  12   |                                                             [Awesome Automations] + Lab Time                                                              |
 |  13   |                                                        [Final Presentations](#final-presentations)                                                        |
 
 ## Class Assignments
@@ -111,7 +111,8 @@ To pass this course you must meet the following requirements:
 - **Make up all classwork** from all absences.
 
 
-[Pagination & Search]: Lessons/SearchPagination.md
+[Course Overview / Pagination]: Lessons/Pagination.md
+[Search]: Lessons/Search.md
 [Introduction to Amazon S3]: Lessons/UploadS3.md
 [Getting Started with Serverless]: Lessons/ServerlessIntro.md
 [Payment Gateways]: Lessons/Payments.md

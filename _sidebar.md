@@ -1,5 +1,6 @@
 - **Lessons**
-  - [Pagination & Search](Lessons/SearchPagination.md)
+  - [Pagination](Lessons/Pagination.md)
+  - [Search](Lessons/Search.md)
   - [Sending Emails](Lessons/Emails.md)
   - [Payment Gateways](Lessons/Payments.md)
   - [Uploading Images on AWS](Lessons/UploadS3.md)
