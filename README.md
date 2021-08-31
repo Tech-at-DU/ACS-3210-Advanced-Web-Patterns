@@ -50,9 +50,9 @@ In this course students deepen their understanding of the web and implement adva
 | :---: | :-------------------------------------------------------------------------------------------------------------------------------------------------------: |
 |   1   |                                                              [Course Overview / Pagination]                                                               |
 |   2   |                                                                         [Search]                                                                          |
-|   3   |                                                                     [Sending Emails]                                                                      |
+|   3   |                                                                [Introduction to Amazon S3]                                                                |
 |   4   |                                                                    [Payment Gateways]                                                                     |
-|   5   |                                                                [Introduction to Amazon S3]                                                                |
+|   5   |                                                                     [Sending Emails]                                                                      |
 |   6   |                                                             [Getting Started with Serverless]                                                             |
 |   7   |                                                                 [Serverless Architecture]                                                                 |
 |   8   | **[Serverless IRL] + Guest Speaker ([Slides](assets/MakeSchoolServerless.pdf))**<br><small>🎤 **[James Beswick]** _(Sr. Developer Advocate @ AWS)</small>_ |
