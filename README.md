@@ -56,11 +56,12 @@ In this course students deepen their understanding of the web and implement adva
 |   6   |                                                             [Getting Started with Serverless]                                                             |
 |   7   |                                                                 [Serverless Architecture]                                                                 |
 |   8   | **[Serverless IRL] + Guest Speaker ([Slides](assets/MakeSchoolServerless.pdf))**<br><small>🎤 **[James Beswick]** _(Sr. Developer Advocate @ AWS)</small>_ |
-|   9   |                                                            [Intro to WebSockets] / [Make Chat]                                                            |
+|   9   |                                                                   [Intro to WebSockets]                                                                   |
 |  10   |                                                                 [Working With WebSockets]                                                                 |
-|  11   |                                                          [Building and Deploying a Node Module]                                                           |
-|  12   |                                                             [Awesome Automations] + Lab Time                                                              |
-|  13   |                                                        [Final Presentations](#final-presentations)                                                        |
+|  11   |                                                                   Lab Time: [Make Chat]                                                                   |
+|  12   |                                                          [Building and Deploying a Node Module]                                                           |
+|  13   |                                                             [Awesome Automations] + Lab Time                                                              |
+|  14   |                                                        [Final Presentations](#final-presentations)                                                        |
 
 ## Class Assignments
 
@@ -87,16 +88,14 @@ To access each tutorial, **click the bold links** below. Be sure to complete the
 
 ### Final Presentation
 
-The delivery of a live or pre-recorded presentation is required to pass this course. **Presentations will be delivered on Wednesday, December 9th on our final day of class**.
-
-Your **three to five minute presentation** should focus on the **experience you gained** and **lessons you learned** while implementing one of the three [Challenges](#challenges) in this course.
+The delivery of a live or pre-recorded presentation is required to pass this course. **Presentations will be delivered on our final day of class**.
 
 **Your final presentation will be evaluated based on the [ACS Presentation Rubric](https://docs.google.com/document/d/1WTLcZNyvRGYDz5L8Kr8a0ILbFAyr92u85paoqGFjxPg/edit). You must earn an average of 2.5 on the rubric to pass**.
 
 ## Late Assignment Policy
 
 - Late assignments that are submitted **more than 5 days (120 hours)** after the deadline will be given a **25% late penalty**.
-- The **absolute last day** to submit any assignment will be **Monday, March 3 at 11:59 PM**.
+- The **absolute last day** to submit any assignment will be **Friday, October 8th at 11:59 PM**.
 
 If you require accommodations or have extenuating circumstances such as prolonged illness, please contact your instructor to request an extension.
 
