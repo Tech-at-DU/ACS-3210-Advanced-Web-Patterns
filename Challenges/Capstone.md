@@ -8,6 +8,7 @@
 1. [Project Requirements](#project-requirements)
 1. [Directory Structure](#directory-structure)
 1. [Implementation Guidelines](#implementation-guidelines)
+1. [Presentation and Demonstration](#presentation-and-demonstration)
 
 ## Learning Objectives
 
@@ -53,8 +54,14 @@ Please adhere to the following structure when initializing your project. This is
 	├── 📄 app.js
 ```
 
+**OPTIONAL**: A templating engine may be used, if preferred.
+
 ## Implementation Guidelines
 
 - **KEEP IT SIMPLE**: The brevity of this starting structure should encourage your team to create a true MVP!
 - **PREP FOR POLISH**: Once the app is functioning, spend the remaining time polishing it for your portfolio.
 - **ASK FOR ASSISTANCE**: Schedule a [meeting with Dani](https://bit.ly/dani-meeting) if you need help with the front or back end.
+
+## Presentation and Demonstration
+
+`TODO`
