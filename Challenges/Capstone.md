@@ -55,6 +55,6 @@ Please adhere to the following structure when initializing your project. This is
 
 ## Implementation Guidelines
 
-- **KEEP IMPLEMENTATIONS MINIMAL**: The brevity of this starting structure should encourage your team to create a true MVP!
+- **KEEP IT SIMPLE**: The brevity of this starting structure should encourage your team to create a true MVP!
 - **MAKE TIME FOR POLISH**: Once the app is functioning, spend the remaining time polishing it for your portfolio.
 - **ASK FOR ASSISTANCE**: Schedule a [meeting with Dani](https://bit.ly/dani-meeting) if you need help with the front or back end.
