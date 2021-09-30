@@ -15,3 +15,4 @@
   - [**Challenge 1**: Serverless](Challenges/Serverless.md)
   - [**Challenge 2**: Websockets](Challenges/Websockets.md)
   - [**Challenge 3**: Modules](Challenges/Modules.md)
+  - [**Capstone Project**: WebSockets](Challenges/Capstone.md)

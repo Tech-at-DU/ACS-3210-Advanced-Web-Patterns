@@ -15,7 +15,7 @@
 1. [Class Assignments](#class-assignments)
    1. [Tutorials](#tutorials)
    1. [Challenges](#challenges)
-   1. [Final Presentation](#final-presentation)
+   1. [Capstone Project](#capstone-project)
 1. [Late Assignment Policy](#late-assignment-policy)
 1. [Evaluation](#evaluation)
 
@@ -80,17 +80,18 @@ To access each tutorial, **click the bold links** below. Be sure to complete the
 
 ### Challenges
 
-| Name                                                  | More Info                                |
-| ----------------------------------------------------- | ---------------------------------------- |
-| **Challenge 1**: Choose Your Own Serverless Adventure | [Instructions](Challenges/Serverless.md) |
-| **Challenge 2**: Mini Websocket App                   | [Instructions](Challenges/Websockets.md) |
-| **Challenge 3**: Node Module                          | [Instructions](Challenges/Module.md)     |
+| Name                                        | Team Size | More Info                                |
+| ------------------------------------------- | :-------: | ---------------------------------------- |
+| **Challenge 1**: Serverless REST API        |    `2`    | [Instructions](Challenges/Serverless.md) |
+| **Challenge 2**: Start Strong with SocketIO |    `1`    | [Instructions](Challenges/Websockets.md) |
+| **Challenge 3**: New Modules Now with NPM   |    `1`    | [Instructions](Challenges/Module.md)     |
 
-### Final Presentation
+### Capstone Project
 
-The delivery of a live or pre-recorded presentation is required to pass this course. **Presentations will be delivered on our final day of class**.
-
-**Your final presentation will be evaluated based on the [ACS Presentation Rubric](https://docs.google.com/document/d/1WTLcZNyvRGYDz5L8Kr8a0ILbFAyr92u85paoqGFjxPg/edit). You must earn an average of 2.5 on the rubric to pass**.
+| Name                               | Team Size | More Info                                           | Rubric                                                                                         |
+| ---------------------------------- | :-------: | --------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| **Repository**: Capstone Project   |    `4`    | [Instructions](Challenges/Capstone.md)              | -                                                                                              |
+| **Presentation**: Capstone Project |    `4`    | [Instructions](Challenges/Capstone.md#Presentation) | [Rubric](https://docs.google.com/document/d/1WTLcZNyvRGYDz5L8Kr8a0ILbFAyr92u85paoqGFjxPg/edit) |
 
 ## Late Assignment Policy
 
@@ -105,7 +106,8 @@ To pass this course you must meet the following requirements:
 
 - **Complete both** the **[Pete's Pets]** and **[Make Chat]** tutorials and submit your code on [Gradescope].
 - **Submit all three [challenges](#challenges)** on [Gradescope].
-- **Deliver a [final presentation](#final-presentation)** on the last day of class.
+- **Build a [Capstone Project](#capstone-project)** with your assigned team and submit the repository for review on [Gradescope].
+- **Deliver a [presentation](#capstone-project)** demonstrating your [Capstone Project](#capstone-project) on the final day of class.
 - Actively **participate in class** and **abide by the attendance policy**.
 - **Make up all classwork** from all absences.
 
