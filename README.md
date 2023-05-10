@@ -60,7 +60,7 @@ In this course students deepen their understanding of the web and implement adva
 |  10   |                                                                 [Working With WebSockets]                                                                 |
 |  11   |                                                                   Lab Time: [Make Chat]                                                                   |
 |  12   |                                                          [Building and Deploying a Node Module]                                                           |
-|  13   |                                                             [Awesome Automations] + Lab Time                                                              |
+|  13   |                                                            Lab Time                                                              |
 |  14   |                                                        [Final Presentations](#final-presentations)                                                        |
 
 ## Class Assignments
@@ -123,7 +123,6 @@ To pass this course you must meet the following requirements:
 [Serverless Architecture]:Lessons/ServerlessDiagrams.md
 [Serverless IRL]: Lessons/ServerlessIRL.md
 [Building and Deploying a Node Module]: Lessons/NodeModules.md
-[Awesome Automations]: Lessons/Automations.md
 [James Beswick]: https://aws.amazon.com/blogs/compute/author/jbeswick/
 [Make Chat]: https://makeschool.org/mediabook/oa/tutorials/make-chat/start-slacking/
 [Pete's Pets]: https://makeschool.org/mediabook/oa/tutorials/pete-s-pet-emporium---advanced-web-recipes/getting-started-V4Q=/
