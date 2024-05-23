@@ -90,8 +90,8 @@ To access each tutorial, **click the bold links** below. Be sure to complete the
 
 | Name                               | Team Size | More Info                                           | Rubric                                                                                         |
 | ---------------------------------- | :-------: | --------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| **Repository**: Capstone Project   |    `4`    | [Instructions](Challenges/Capstone.md)              | -                                                                                              |
-| **Presentation**: Capstone Project |    `4`    | [Instructions](Challenges/Capstone.md#Presentation) | [Rubric](https://docs.google.com/document/d/1WTLcZNyvRGYDz5L8Kr8a0ILbFAyr92u85paoqGFjxPg/edit) |
+| **Repository**: Capstone Project   |    `2`    | [Instructions](Challenges/Capstone.md)              | -                                                                                              |
+| **Presentation**: Capstone Project |    `2`    | [Instructions](Challenges/Capstone.md#Presentation) | [Rubric](https://docs.google.com/document/d/1WTLcZNyvRGYDz5L8Kr8a0ILbFAyr92u85paoqGFjxPg/edit) |
 
 ## Late Assignment Policy
 
