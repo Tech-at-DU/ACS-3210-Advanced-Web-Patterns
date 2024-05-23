@@ -43,8 +43,8 @@ In this course students deepen their understanding of the web and implement adva
 
 ## Schedule
 
-**Course Dates**: Tuesday, August 24 – Thursday, October 7, 2021<br>
-**Class Times**: Tuesday, Thursday at 4:00pm to 5:30pm
+**Course Dates**: Tuesday, May 21 – Tuesday, July 9, 2024<br>
+**Class Times**: Tuesday, Thursday at 10:00am to 12:00pm
 
 | Class |                                                                          Topics                                                                           |
 | :---: | :-------------------------------------------------------------------------------------------------------------------------------------------------------: |
@@ -124,6 +124,6 @@ To pass this course you must meet the following requirements:
 [Serverless IRL]: Lessons/ServerlessIRL.md
 [Building and Deploying a Node Module]: Lessons/NodeModules.md
 [James Beswick]: https://aws.amazon.com/blogs/compute/author/jbeswick/
-[Make Chat]: https://makeschool.org/mediabook/oa/tutorials/make-chat/start-slacking/
-[Pete's Pets]: https://makeschool.org/mediabook/oa/tutorials/pete-s-pet-emporium---advanced-web-recipes/getting-started-V4Q=/
+[Make Chat]: https://github.com/Tech-at-DU/Make-Chat-Tutorial
+[Pete's Pets]: https://github.com/Tech-at-DU/Proud-Petes-Pet-Emporium
 [Gradescope]: https://www.gradescope.com/
