@@ -53,14 +53,14 @@ In this course students deepen their understanding of the web and implement adva
 |   3   |                                                                [Introduction to Amazon S3]                                                                |
 |   4   |                                                                    [Payment Gateways]                                                                     |
 |   5   |                                                                     [Sending Emails]                                                                      |
-|   6   |                                                             [Getting Started with Serverless]                                                             |
-|   7   |                                                                 [Serverless Architecture]                                                                 |
-|   8   | **[Serverless IRL] + Guest Speaker ([Slides](assets/MakeSchoolServerless.pdf))**<br><small>🎤 **[James Beswick]** _(Sr. Developer Advocate @ AWS)</small>_ |
-|   9   |                                                                   [Intro to WebSockets]                                                                   |
-|  10   |                                                                 [Working With WebSockets]                                                                 |
-|  11   |                                                                   Lab Time: [Make Chat]                                                                   |
+|   6   |                                                           [Intro to WebSockets]                                                                           |
+|   7   |                                                                [Working With WebSockets]                                                                  |
+|   8   |     Lab Time: [Make Chat]     
+|   9   |                                                          **[Serverless IRL] + Guest Speaker ([Slides](assets/MakeSchoolServerless.pdf))**<br><small>🎤 **[James Beswick]** _(Sr. Developer Advocate @ AWS)</small>_                                               |
+|  10   |                                             [Getting Started with Serverless]                                                                         |
+|  11   |                           [Serverless Architecture]                                 |                                                                  |
 |  12   |                                                          [Building and Deploying a Node Module]                                                           |
-|  13   |                                                            Lab Time                                                              |
+|  13   |                                                            Lab Time: Capstone Project                                                              |
 |  14   |                                                        [Final Presentations](#final-presentations)                                                        |
 
 ## Class Assignments
