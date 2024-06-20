@@ -3,7 +3,6 @@
 1. [Instructions](#instructions)
    1. [MVP](#mvp)
    1. [(Optional) Polished MVP](#optional-polished-mvp)
-   1. [(Optional) Portfolio Ready](#optional-portfolio-ready)
 1. [Guidelines](#guidelines)
 1. [Rubric](#rubric)
 
@@ -19,10 +18,6 @@
 ### (Optional) Polished MVP
 
 **Stretch Challenge**: Finish _all_ of the "Homework" bullets!
-
-### (Optional) Portfolio Ready
-
-**Stretch++**: Make your own WebSocket application. See [Guidelines](#guidelines) below. Add it to your Make School portfolio for a bonus point on this assignment!
 
 ## Guidelines
 
