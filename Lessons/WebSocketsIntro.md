@@ -232,6 +232,8 @@ http.listen(3000, function(){
 
 ## [**30m**] 💻 **Activity**: Try It Yourself
 
+### LAB TIME / HOMEWORK
+
 **Follow the [Getting Started project from Socket.io](https://socket.io/get-started/chat/)**
 
 1. Complete the project
