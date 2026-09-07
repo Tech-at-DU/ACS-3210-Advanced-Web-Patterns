@@ -12,6 +12,7 @@
 1. [Diagram & Demo](#diagram-%26-demo)
 1. [Resources](#resources)
 1. [Boiler Plate](#boiler-plate)
+1. [Troubleshooting: Creating a Free AWS Account](#troubleshooting%3A-creating-a-free-aws-account)
 1. [Readings](#readings)
 
 ## 🏆 Learning Outcomes
@@ -145,6 +146,17 @@ Hint - you will need `dotenv` to protect your AWS credentials.
 
 Hint - install `imagemagick` with brew. (its a dependency for manipulating images).
 
+
+## Troubleshooting: Creating a Free AWS Account
+
+Students often get stuck at the payment step when creating a free AWS account — the form won't take a card or bank account, or AWS asks them to "change network." Share these tips before or during the S3 signup walkthrough:
+
+1. Prefer a **debit or credit card** (Visa/Mastercard) over a bank account, and make sure the billing address matches the bank.
+1. Ask the bank to allow **international / online authorization charges** — AWS does a small temporary hold, then drops it.
+1. Try an **incognito window** or a **phone hotspot**; campus wifi is a common failure point.
+1. If the account is still blocked, have them open an AWS Support case under **Account and billing** → **Account** → **Account Activation** (this works even before the account is fully activated).
+
+If anyone is still stuck, walk signup and bucket creation live so they can continue with uploads.
 
 ## Readings
 
