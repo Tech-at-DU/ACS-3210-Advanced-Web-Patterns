@@ -56,7 +56,7 @@ In this course students deepen their understanding of the web and implement adva
 |   6   |                                                           [Intro to WebSockets]                                                                           |
 |   7   |                                                                [Working With WebSockets]                                                                  |
 |   8   |     Lab Time: [Make Chat]     
-|   9   |                                                          **[Serverless IRL] + Guest Speaker ([Slides](assets/MakeSchoolServerless.pdf))**<br><small>🎤 **[James Beswick]** _(Sr. Developer Advocate @ AWS)</small>_                                               |
+|   9   |                                                          **[Serverless IRL] + Guest Speaker ([Slides](Lessons/assets/MakeSchoolServerless.pdf))**<br><small>🎤 **[James Beswick]** _(Sr. Developer Advocate @ AWS)</small>_                                               |
 |  10   |                                             [Getting Started with Serverless]                                                                         |
 |  11   |                           [Serverless Architecture]                                 |                                                                  |
 |  12   |                                                          [Building and Deploying a Node Module]                                                           |
@@ -120,7 +120,7 @@ To pass this course you must meet the following requirements:
 [Sending Emails]: Lessons/Emails.md
 [Intro to WebSockets]: Lessons/WebSocketsIntro.md
 [Working with WebSockets]: Lessons/WebSocketsIRL.md
-[Serverless Architecture]:Lessons/ServerlessDiagrams.md
+[Serverless Architecture]: Lessons/ServerlessIRL.md
 [Serverless IRL]: Lessons/ServerlessIRL.md
 [Building and Deploying a Node Module]: Lessons/NodeModules.md
 [James Beswick]: https://aws.amazon.com/blogs/compute/author/jbeswick/

@@ -5,7 +5,7 @@
   - [Payment Gateways](Lessons/Payments.md)
   - [Uploading Images on AWS](Lessons/UploadS3.md)
   - [Intro to Serverless](Lessons/ServerlessIntro.md)
-  - [Serverless Architecture](Lessons/ServerlessDiagrams.md)
+  - [Serverless Architecture](Lessons/ServerlessIRL.md)
   - [Serverless IRL](Lessons/ServerlessIRL.md)
   - [Intro to WebSockets](Lessons/WebSocketsIntro.md)
   - [Working with WebSockets](Lessons/WebSocketsIRL.md)
@@ -13,5 +13,5 @@
 - **Challenges**
   - [**Challenge 1**: Serverless](Challenges/Serverless.md)
   - [**Challenge 2**: Websockets](Challenges/Websockets.md)
-  - [**Challenge 3**: Modules](Challenges/Modules.md)
+  - [**Challenge 3**: Modules](Challenges/Module.md)
   - [**Capstone Project**: WebSockets](Challenges/Capstone.md)

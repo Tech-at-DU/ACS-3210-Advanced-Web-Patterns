@@ -51,12 +51,14 @@ In mongoose, we can search by passing a Regex (regular expression) for the term 
 User.find({ name: /john/i }, (err, docs) => { });
 ```
 
-Remember to use the `RegExp` object in JavaScript to turn a string into a Regex pattern.
+Remember to use the `RegExp` object in JavaScript to turn a string into a Regex pattern. Pass the **pattern** as the first argument and the **flags** as the second — do **not** wrap the term in `/.../` inside the string (that would search for literal slashes).
 
 ```js
-regex = new RegExp(`/${req.query.term}/i`);
-User.find({ name: regex }, (err, docs) => { });
+const regex = new RegExp(req.query.term, 'i');
+const docs = await User.find({ name: regex });
 ```
+
+**Tip:** User-controlled regex can blow up your CPU (**ReDoS**). Escape special characters before you build the pattern (e.g. with a small escape helper, or a library), and prefer bounded / indexed search when the dataset grows.
 
 <!--  -->
 
