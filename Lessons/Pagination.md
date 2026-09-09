@@ -13,6 +13,7 @@
 1. [Pagination](#pagination)
    1. [Why do we need pagination?](#why-do-we-need-pagination%3F)
    1. [Question](#question)
+1. [[**35m**] 💬 TT: Pagination in Express + Mongoose](#%5B%2a%2a35m%2a%2a%5D-%F0%9F%92%AC-tt%3A-pagination-in-express--mongoose)
 1. [[**10m**] 🌴 BREAK {docsify-ignore}](#%5B%2a%2a10m%2a%2a%5D-%F0%9F%8C%B4-break-%7Bdocsify-ignore%7D)
 1. [Activity: Technical Debate - Picking a Pagination Module](#activity%3A-technical-debate---picking-a-pagination-module)
 
@@ -111,6 +112,116 @@ What are other benefits to pagination?
 - Positive effect on SEO, easier for crawlers to navigate
 
 <!-- > -->
+
+## [**35m**] 💬 TT: Pagination in Express + Mongoose
+
+**Destination:** By the end of this block you can ship a paginated JSON list endpoint — parse query params, query a page of documents, and return totals so the client can render next/prev.
+
+Work **destination-first**: decide the response shape, then fill in each step that gets you there.
+
+```js
+// GET /pets?page=2&limit=20
+// Response shape we're aiming for:
+// { data: [...], page, limit, total, pages }
+```
+
+### 1. Parse `page` and `limit` from the query string
+
+Clients send page controls as query params. Start by reading them off `req.query`.
+
+```js
+app.get('/pets', async (req, res) => {
+  try {
+    let page = req.query.page;
+    let limit = req.query.limit;
+    // ...next steps
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: 'Failed to load pets' });
+  }
+});
+```
+
+### 2. Coerce and validate
+
+Query strings are **strings**. Coerce to numbers, then clamp to safe defaults so bad input cannot DoS your DB.
+
+```js
+    page = Math.max(1, parseInt(page, 10) || 1);
+    limit = Math.min(100, Math.max(1, parseInt(limit, 10) || 20));
+```
+
+- Invalid / missing → defaults (`page = 1`, `limit = 20`)
+- Cap `limit` (e.g. 100) so one request cannot ask for a million rows
+
+### 3. Turn page into `skip` / `limit`
+
+Offset pagination maps page number → how many documents to skip:
+
+```js
+    const skip = (page - 1) * limit;
+```
+
+| page | limit | skip |
+| ---: | ----: | ---: |
+| 1 | 20 | 0 |
+| 2 | 20 | 20 |
+| 3 | 20 | 40 |
+
+### 4. `await` the page of docs **and** the total count
+
+You need both: the slice for this page, and `countDocuments` so the client knows how many pages exist.
+
+```js
+    const [data, total] = await Promise.all([
+      Pet.find({})
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit)
+        .lean(),
+      Pet.countDocuments({}),
+    ]);
+
+    const pages = Math.ceil(total / limit) || 1;
+
+    return res.json({ data, page, limit, total, pages });
+```
+
+Use `async`/`await` (and `Promise.all` when the queries are independent) — hire-bar Express code does not nest callbacks for this.
+
+### 5. Error handling
+
+Wrap the handler in `try` / `catch`. On failure, log the error and return a clear JSON status (do not leak stack traces to the client).
+
+**Full handler:**
+
+```js
+app.get('/pets', async (req, res) => {
+  try {
+    const page = Math.max(1, parseInt(req.query.page, 10) || 1);
+    const limit = Math.min(100, Math.max(1, parseInt(req.query.limit, 10) || 20));
+    const skip = (page - 1) * limit;
+
+    const [data, total] = await Promise.all([
+      Pet.find({}).sort({ createdAt: -1 }).skip(skip).limit(limit).lean(),
+      Pet.countDocuments({}),
+    ]);
+
+    return res.json({
+      data,
+      page,
+      limit,
+      total,
+      pages: Math.ceil(total / limit) || 1,
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: 'Failed to load pets' });
+  }
+});
+```
+
+> Adapted from patterns in [FMIjs advanced-javascript-2023-2024](https://github.com/FMIjs/advanced-javascript-2023-2024) (weeks 6–7: Express + MongoDB list endpoints). Same ideas power the Warm Up tutorial tomorrow.
 
 
 ## [**10m**] 🌴 BREAK {docsify-ignore}
