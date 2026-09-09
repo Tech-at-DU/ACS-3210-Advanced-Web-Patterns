@@ -54,7 +54,7 @@ NPM is a company that promotes open source development for all things JavaScript
 
 Think of it like a library you're installing to help your project do things! NPM is like Brew but for your JS project!
 
-From [time manipulation](https://www.npmjs.com/package/moment) to [web frameworks](https://www.npmjs.com/package/moment), to [creating user interfaces](https://www.npmjs.com/package/react), NPM allows your project to take advantage of all sorts of libraries to solve your problems!
+From [time manipulation](https://www.npmjs.com/package/date-fns) to [web frameworks](https://www.npmjs.com/package/express), to [creating user interfaces](https://www.npmjs.com/package/react), NPM allows your project to take advantage of all sorts of libraries to solve your problems!
 
 <!-- > -->
 
@@ -96,7 +96,9 @@ It will then have a list of `dependencies`, or modules that need to be installed
 
 ### What's With the `^` Symbols in Versions?
 
-That means we want the stated version _or higher_ for our project!
+The caret (`^`) is **semver range**, not "any higher version forever."
+
+For example, `^4.17.11` means **>=4.17.11 <5.0.0** — npm may install newer **compatible** patch/minor releases in the **same major**, but it will **not** jump to `5.x`. That keeps you on compatible APIs without surprise major upgrades.
 
 Now that we have a `package.json`, all anyone has to do is run `npm install`, and all dependencies listed in `package.json` will be installed!
 
@@ -195,4 +197,4 @@ Now it's your turn to create more node modules! Take some time to create modules
 1. [How to Create and Publish your First Node.js Module (a beautiful article!)](https://medium.com/@jdaudier/how-to-create-and-publish-your-first-node-js-module-444e7585b738)
 1. [Building Your First Node Module](https://gist.github.com/tmpvar/8746055)
 1. [What is this Javascript “require”?](https://stackoverflow.com/questions/9901082/what-is-this-javascript-require#)
-1. [What is require? | Node.js](https://nodejs.org/en/knowledge/getting-started/what-is-require/)
+1. [Modules: CommonJS | Node.js](https://nodejs.org/api/modules.html)

@@ -99,19 +99,19 @@ Furthermore, your server will be bombarded with requests every 10 seconds, even 
 ```js
 async function waitForDataFromServer() {
   let response = await fetch("/updates");
-  let elementToUpdate = document.getElementById("#latest-updates");
+  let elementToUpdate = document.getElementById("latest-updates");
 
   if (response.status === 200) {
     // Get and show the message somewhere in the DOM.
     let newData = await response.text();
-    elementToUpdate.innerHTML("NEW: " + newData);
+    elementToUpdate.innerHTML = "NEW: " + newData;
 
     // Call waitForDataFromServer() again to get the next message.
     await waitForDataFromServer();
   }
   else {
     // If the response contains an error, show the error text on the page.
-    elementToUpdate.innerHTML("ERROR: " + response.statusText)
+    elementToUpdate.innerHTML = "ERROR: " + response.statusText
 
     // After the user responds to the alert, reconnect (in one second)
     await new Promise(resolve => setTimeout(resolve, 1000));

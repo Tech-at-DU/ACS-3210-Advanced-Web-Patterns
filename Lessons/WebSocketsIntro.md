@@ -179,54 +179,60 @@ Back to the LiteBrite...
 
 In the following tutorial we'll be using [Socket.io](https://socket.io/) one of the most reliable npm modules on the web that enables node servers to respond to event-driven WebSocket behaviors. Socket.io is a broad and powerful library that can manage multiple channels, rooms, and manage https and other forms of security. In our case we will be implementing a simple asynchronous push of data from the server to the client.
 
-Remember that since the client and the server are communicating via WebSockets, Socket.io will have client and server-side libraries that you will need to initialize in your project. A simple example is as follows:
+Remember that since the client and the server are communicating via WebSockets, Socket.IO gives you **both** a client library and a server library. Wire the server to an `http.Server` (not just Express), then load the client script from that same origin.
+
+Here's one correct Express + `http` + Socket.IO starter:
+
+```js
+// SERVER — Express serves HTTP; Socket.IO rides on the same http.Server
+const express = require('express');
+const http = require('http');
+const { Server } = require('socket.io');
+
+const app = express();
+const server = http.createServer(app); // Socket.IO needs this http.Server
+const io = new Server(server);
+
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/index.html');
+});
+
+io.on('connection', (socket) => {
+  console.log('a user connected');
+
+  socket.on('chat message', (msg) => {
+    // Pick the right emit — see the note below
+    io.emit('chat message', msg);
+  });
+});
+
+server.listen(3000, () => {
+  console.log('listening on *:3000');
+});
+```
 
 ```html
-<!-- CLIENT -->
-<script src="//socket.io/socket.io.js"></script>
+<!-- CLIENT (index.html) -->
+<script src="/socket.io/socket.io.js"></script>
 <script>
-  var socket = io('http://localhost');
+  const socket = io(); // same origin as the Express server
 
-  socket.emit('ferret', 'tobi', function (data) {
-    console.log(data); // data will be 'woot'
+  socket.emit('chat message', 'hello from the browser');
+  socket.on('chat message', (msg) => {
+    console.log(msg);
   });
 </script>
 ```
 
-```js
-// SERVER
-var io = require('socket.io-client')('http://localhost');
-io.on('connection', function (socket) {
-  socket.on('ferret', function (name, fn) {
-    fn('woot');
-  });
-});
-```
-
 <!-- v -->
 
-Hint: If you are starting your server you need to include io in that server.
+> **Emit cheat sheet (interview-ready)**
+>
+> - `socket.emit(...)` — **that one client** only
+> - `socket.broadcast.emit(...)` — **everyone else**, not the sender
+> - `io.emit(...)` — **everyone** connected (including the sender)
 
-> **NOTE** - `broadcast.emit()` and `emit()` are different. `emit()` sends to all attached sockets, `broadcast.emit()` sends to all except the one that is sending the message.
-
-```js
-// SERVER
-var app = require('express')();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
-
-app.get('/', function(req, res){
-  res.sendFile(__dirname + '/index.html');
-});
-
-io.on('connection', function(socket){
-  console.log('a user connected');
-});
-
-http.listen(3000, function(){
-  console.log('listening on *:3000');
-});
-```
+**Interview beat:** Socket.IO does **not** attach to Express alone. You create an `http.Server` with `http.createServer(app)`, pass **that** into Socket.IO, then call `server.listen(...)`. Express still handles routes; Socket.IO hijacks the upgrade to WebSocket on the same port. If someone asks "why both Express and Socket.IO?", that's the answer — shared HTTP server, different jobs.
 
 <!-- > -->
 
