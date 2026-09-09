@@ -111,6 +111,12 @@ To pass this course you must meet the following requirements:
 - Actively **participate in class** and **abide by the attendance policy**.
 - **Make up all classwork** from all absences.
 
+## References
+
+- [FMIjs / javascript-frameworks-2026](https://github.com/FMIjs/javascript-frameworks-2026) — 2026 FMI JS frameworks materials; source for class updates and advanced demos.
+- [FMIjs / advanced-javascript-2023-2024](https://github.com/FMIjs/advanced-javascript-2023-2024) — FMI Advanced JavaScript (language + Node + Express + sockets); hardens ACS-3210 server JS and WebSockets labs.
+
+
 
 [Course Overview / Pagination]: Lessons/Pagination.md
 [Search]: Lessons/Search.md

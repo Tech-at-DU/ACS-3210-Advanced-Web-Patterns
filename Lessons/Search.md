@@ -45,20 +45,55 @@ Once we can search, we can then *paginate* the responses!
 
 ![mongoose](assets/mongoose.png)
 
-In mongoose, we can search by passing a Regex (regular expression) for the term we want to search for.
+In mongoose, we can search by passing a Regex (regular expression) for the term we want to search for. Prefer **`async`/`await`** over callbacks — that is the hire-bar pattern for Express handlers.
 
 ```js
-User.find({ name: /john/i }, (err, docs) => { });
+// Literal pattern when you know the term at write time:
+const docs = await User.find({ name: /john/i });
 ```
 
-Remember to use the `RegExp` object in JavaScript to turn a string into a Regex pattern. Pass the **pattern** as the first argument and the **flags** as the second — do **not** wrap the term in `/.../` inside the string (that would search for literal slashes).
+For user input, turn the string into a `RegExp`. Pass the **pattern** as the first argument and the **flags** as the second — do **not** wrap the term in `/.../` inside the string (that would search for literal slashes).
+
+**Escape first.** User-controlled strings often contain `.`, `*`, `(`, etc. Escape special characters **before** you call `new RegExp(...)`.
 
 ```js
-const regex = new RegExp(req.query.term, 'i');
+function escapeRegex(str) {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+const term = String(req.query.term || '').trim();
+const regex = new RegExp(escapeRegex(term), 'i');
 const docs = await User.find({ name: regex });
 ```
 
-**Tip:** User-controlled regex can blow up your CPU (**ReDoS**). Escape special characters before you build the pattern (e.g. with a small escape helper, or a library), and prefer bounded / indexed search when the dataset grows.
+**Tip:** User-controlled regex can blow up your CPU (**ReDoS**). Always escape (or use a vetted library), and prefer bounded / indexed search when the dataset grows.
+
+### Express route (await + errors)
+
+Ship it as a real handler — coerce the term, escape, `await` the query, and return JSON errors (same hire-bar shape as Day 1 pagination). Aligns with Pete’s Pets P01 after the RegExp/await fix.
+
+```js
+app.get('/users/search', async (req, res) => {
+  try {
+    const term = String(req.query.term || '').trim();
+    if (!term) {
+      return res.status(400).json({ error: 'term query param is required' });
+    }
+
+    const regex = new RegExp(escapeRegex(term), 'i');
+    const docs = await User.find({ name: regex }).limit(50).lean();
+
+    return res.json({ data: docs, term });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: 'Search failed' });
+  }
+});
+```
+
+Empty term → `400`. DB failure → `500` with a clear message (no stack leak). Cap with `.limit(...)` so one request cannot dump the collection.
+
+> Same escape + await pattern as [Proud Pete's Pet Emporium — Simple Search](https://github.com/Tech-at-DU/Proud-Petes-Pet-Emporium) (Wave 0.2 fix-before-wave1).
 
 <!--  -->
 
