@@ -468,12 +468,11 @@ Tomorrow's first 15m:
 
 ### In Class
 
-- Open this file → skim the agenda → start Attendance / Warm Up at 4:00.
-- Warm-up is a Zoom variety beat: keep it short; the “transactional email you got this week” prompt is enough.
-- Breakouts of 3–4 for Activity 1 / Activity 2. Visit rooms; do not dump extra instructor direction into the body above.
-- After Activity 1, debrief one failure mode in the main room (403 sandbox `to:`, missing env key, or Ethereal preview URL).
-- Done when the room can send a transactional message from the server, explain why the API key never touches the browser, and name SPF/DKIM/DMARC in one on-the-job sentence each.
-- Optional standup sticky in notes:
+| | |
+| --- | --- |
+| **Next action** | Open this file → skim the agenda table → start Why / Objectives at 4:00. |
+| **Done when** | You can send a transactional message from the server, explain why the API key never touches the browser, and name SPF/DKIM/DMARC in one on-the-job sentence each. |
+| **≤2m next** | Optional standup sticky in your notes: Feeling / Behind\|On track\|Ahead / Today’s MVP. |
 
 ```text
 Feeling (1 word):
