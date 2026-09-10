@@ -1,15 +1,6 @@
 # Sending Emails (Transactional) — ACS-3210 Day 5
 
-**Authorship:** Dani Roxberry  
-**Session window:** Thu Sep 10, 2026 · 4:00–6:00pm America/New_York (after ACS-4210)  
-**Topic:** Transactional email from Node — providers, secrets, templates, deliverability basics  
-**Mode:** Job simulation (on-the-job Node eng block)  
-**Bars:** job-sim voice · 30–40m TT · mid-TT audience Qs · Syllabus-Template shape.  
-**Accuracy check:** green with P0 fixes (2026-09-10) — companion Expert notes live under `Reports/` (not in this body).  
-**Primary stack:** **Resend** (free-tier friendly) + **Nodemailer** as the transport abstraction · **Ethereal** as zero-signup fallback  
 ⭐️ **GOAL:** Leave able to pick a 2026 provider, keep secrets server-side, send HTML+text via Nodemailer (or Resend SDK), and talk deliverability without hand-waving.
-
-**MVP (≤15m):** one real *or* Ethereal test send from Express (or course scaffold) with `html` + `text`, secrets in env only, and a visible success artifact (`messageId` / preview URL).
 
 | **Elapsed** | **Time** | **Activity** |
 | ----------- | -------- | ------------------------- |
