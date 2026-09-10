@@ -6,30 +6,12 @@
 | ----------- | -------- | ------------------------- |
 | 0:00 | 0:05 | Why / Objectives |
 | 0:05 | 0:40 | Overview / TT (+ JS competence densified) |
-| 0:45 | 0:15 | Lab I — MVP send |
+| 0:45 | 0:15 | Lab 1 — MVP send |
 | 1:00 | 0:10 | BREAK |
-| 1:10 | 0:30 | Lab II — modular `mailer` + route |
+| 1:10 | 0:30 | Lab 2 — modular `mailer` + route |
 | 1:40 | 0:15 | Build time / stretch (Pete’s purchase hook) |
 | 1:55 | 0:05 | Wrap Up |
 | **TOTAL** | **2:00** | |
-
----
-
-## ADHD run-of-show (whole block)
-
-| | |
-| --- | --- |
-| **Next action** | Open this file → skim the agenda table → start Why / Objectives at 4:00. |
-| **Done when** | You can send a transactional message from the server, explain why the API key never touches the browser, and name SPF/DKIM/DMARC in one on-the-job sentence each. |
-| **≤2m next** | Optional standup sticky in your notes: Feeling / Behind\|On track\|Ahead / Today’s MVP. |
-
-```text
-Feeling (1 word):
-Behind | On track | Ahead:
-Today's MVP (1 sentence): send a test email; log messageId (or Ethereal preview URL)
-```
-
-**Broken-link note (repo stub):** the Medium “Nodemailer + Mailgun” write-up linked from the old `Emails.md` may be stale. Prefer official docs (Resources below). Do **not** demo from the Medium piece.
 
 ---
 
@@ -64,7 +46,7 @@ Say:
 4. **Send** a message with both `html` and `text` bodies; sketch Handlebars vs React Email; name **SPF / DKIM / DMARC** in one sentence each.
 5. **Write** a small async `sendMail` helper that surfaces failures (JS competence) and wire it from an Express route.
 
-**How you’ll know:** Lab I produces a `messageId` (or Ethereal preview URL) in the terminal; Lab II exports `utils/mailer.js` and a POST (or purchase) path that awaits send + returns a clear status.
+**How you’ll know:** Lab 1 produces a `messageId` (or Ethereal preview URL) in the terminal; Lab 2 exports `utils/mailer.js` and a POST (or purchase) path that awaits send + returns a clear status.
 
 ---
 
@@ -72,7 +54,7 @@ Say:
 
 **Next action:** Destination → providers → Nodemailer abstraction → secrets → templates → auth headers → JS async/error shapes.  
 **Done when:** You can sketch “browser → Express → mailer → provider” and say where the API key lives.  
-**≤2m next after TT:** Open Lab I; pick Resend *or* Ethereal.
+**≤2m next after TT:** Open Lab 1; pick Resend *or* Ethereal.
 
 ### 1. Transactional vs marketing (~4m)
 
@@ -266,7 +248,7 @@ export async function sendTransactionalEmail({ to, subject, html, text }) {
 
 ---
 
-## Lab I — MVP send (15 min)
+## Lab 1 — MVP send (15 min)
 
 **Work shape:** solo · **MVP** · **visible checkpoint** · **artifact**.
 
@@ -298,7 +280,7 @@ export async function sendTransactionalEmail({ to, subject, html, text }) {
 3. Nodemailer SMTP **or** `resend` SDK — one path only
 4. Log `messageId` / `data.id`
 
-**MVP definition of done (≤15m):** one successful send logged. Templates polish waits for Lab II.
+**MVP definition of done (≤15m):** one successful send logged. Templates polish waits for Lab 2.
 
 ---
 
@@ -306,7 +288,7 @@ export async function sendTransactionalEmail({ to, subject, html, text }) {
 
 ---
 
-## Lab II — modular mailer + Express (30 min)
+## Lab 2 — modular mailer + Express (30 min)
 
 | | |
 | --- | --- |
@@ -400,18 +382,34 @@ Tomorrow's first 15m:
 
 ---
 
-## Facilitator notes (Dani voice / pacing)
+## For curriculum authors
 
-- After ACS-4210 same day — keep energy practical; MVP in Lab I before perfect templates.
-- Voice: write-like-you-talk. Short blocks. Destination first. Job-sim framing only.
+### ADHD run-of-show (whole block)
+
+| | |
+| --- | --- |
+| **Next action** | Open this file → skim the agenda table → start Why / Objectives at 4:00. |
+| **Done when** | You can send a transactional message from the server, explain why the API key never touches the browser, and name SPF/DKIM/DMARC in one on-the-job sentence each. |
+| **≤2m next** | Optional standup sticky in your notes: Feeling / Behind\|On track\|Ahead / Today’s MVP. |
+
+```text
+Feeling (1 word):
+Behind | On track | Ahead:
+Today's MVP (1 sentence): send a test email; log messageId (or Ethereal preview URL)
+```
+
+### Facilitator notes
+
+**Broken-link note (repo stub):** the Medium “Nodemailer + Mailgun” write-up linked from the old `Emails.md` may be stale. Prefer Resources above. Do **not** demo from the Medium piece.
+
+- After ACS-4210 same day — keep energy practical; MVP in Lab 1 before perfect templates.
+- Voice: write-like-you-talk. Short blocks. GOAL first. Job-sim framing only.
 - If signup friction spikes → **force Path A Ethereal** so nobody loses the JS async lesson to OAuth.
 - Pete’s Mailgun content is **stretch / after-hours alignment**, not the live primary demo.
 - Topic-only file: no roster / attendance / room-mgmt bits on purpose.
 - Job-sim standing: dropped academic tokens (`Class/lab`, `homework/stretch`) — use lab / stretch / after-hours instead.
 
----
-
-## Node Engineer — open API / stack uncertainties
+### Node Engineer — open API / stack uncertainties
 
 Flag for follow-up (do not block today’s live block):
 
