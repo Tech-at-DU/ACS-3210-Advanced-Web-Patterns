@@ -15,24 +15,6 @@
 
 ---
 
-## ADHD run-of-show (whole block)
-
-| | |
-| --- | --- |
-| **Next action** | Open this file → skim the agenda table → start Why / Objectives at 4:00. |
-| **Done when** | You can send a transactional message from the server, explain why the API key never touches the browser, and name SPF/DKIM/DMARC in one on-the-job sentence each. |
-| **≤2m next** | Optional standup sticky in your notes: Feeling / Behind\|On track\|Ahead / Today’s MVP. |
-
-```text
-Feeling (1 word):
-Behind | On track | Ahead:
-Today's MVP (1 sentence): send a test email; log messageId (or Ethereal preview URL)
-```
-
-**Broken-link note (repo stub):** the Medium “Nodemailer + Mailgun” write-up linked from the old `Emails.md` may be stale. Prefer official docs (Resources below). Do **not** demo from the Medium piece.
-
----
-
 ## Why You Should Know This (2 min)
 
 People have been trying to kill email for years. It still wins for **receipts, password resets, magic links, “your order shipped,” and “something weird happened on your account.”** Those are **transactional** emails — triggered by an app event, expected by one user, time-sensitive.
@@ -400,18 +382,34 @@ Tomorrow's first 15m:
 
 ---
 
-## Facilitator notes (Dani voice / pacing)
+## For curriculum authors
+
+### ADHD run-of-show (whole block)
+
+| | |
+| --- | --- |
+| **Next action** | Open this file → skim the agenda table → start Why / Objectives at 4:00. |
+| **Done when** | You can send a transactional message from the server, explain why the API key never touches the browser, and name SPF/DKIM/DMARC in one on-the-job sentence each. |
+| **≤2m next** | Optional standup sticky in your notes: Feeling / Behind\|On track\|Ahead / Today’s MVP. |
+
+```text
+Feeling (1 word):
+Behind | On track | Ahead:
+Today's MVP (1 sentence): send a test email; log messageId (or Ethereal preview URL)
+```
+
+### Facilitator notes
+
+**Broken-link note (repo stub):** the Medium “Nodemailer + Mailgun” write-up linked from the old `Emails.md` may be stale. Prefer Resources above. Do **not** demo from the Medium piece.
 
 - After ACS-4210 same day — keep energy practical; MVP in Lab I before perfect templates.
-- Voice: write-like-you-talk. Short blocks. Destination first. Job-sim framing only.
+- Voice: write-like-you-talk. Short blocks. GOAL first. Job-sim framing only.
 - If signup friction spikes → **force Path A Ethereal** so nobody loses the JS async lesson to OAuth.
 - Pete’s Mailgun content is **stretch / after-hours alignment**, not the live primary demo.
 - Topic-only file: no roster / attendance / room-mgmt bits on purpose.
 - Job-sim standing: dropped academic tokens (`Class/lab`, `homework/stretch`) — use lab / stretch / after-hours instead.
 
----
-
-## Node Engineer — open API / stack uncertainties
+### Node Engineer — open API / stack uncertainties
 
 Flag for follow-up (do not block today’s live block):
 
