@@ -5,7 +5,7 @@
 | **Elapsed** | **Time** | **Activity** |
 | ----------- | -------- | ------------------------- |
 | 0:00 | 0:05 | Why / Objectives |
-| 0:05 | 0:40 | Overview / TT (+ JS competence densified) |
+| 0:05 | 0:40 | Overview / TT (+ Send Emails Async) |
 | 0:45 | 0:15 | Lab 1 — MVP send |
 | 1:00 | 0:10 | BREAK |
 | 1:10 | 0:30 | Lab 2 — modular `mailer` + route |
@@ -144,6 +144,14 @@ function getMailConfig() {
 Clients still matter: some are HTML, some are text-only, some strip styles. **Always send both** when you can.
 
 ```js
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;');
+}
+
 await transporter.sendMail({
   from: config.from,
   to: user.email,
@@ -174,7 +182,7 @@ Say:
 
 **Pulse check 3 (≤60s):** Can you trust `from:` alone? Why can anyone set `from: ceo@yourbank.com` in raw SMTP? Expected: **SMTP doesn’t prove domain ownership** — SPF/DKIM/DMARC + verified domain do.
 
-### 5. JS competence densified — async send + failure surfaces (~14m)
+### 5. Send Emails Async (~14m)
 
 Goal: practice **real Node**, not just paste provider snippets.
 
@@ -183,7 +191,20 @@ Goal: practice **real Node**, not just paste provider snippets.
 > **Scaffold note:** Pete’s is **CJS** (`require`) unless `"type": "module"`. Use `const nodemailer = require('nodemailer')` / `module.exports = { sendTransactionalEmail }` to match Pete’s. ESM `import` is fine only if the course entry is already ESM.
 
 ```js
-export async function sendTransactionalEmail({ to, subject, text, html }) {
+const nodemailer = require('nodemailer');
+
+function getMailConfig() {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    throw new Error('RESEND_API_KEY is missing — set it in .env (server only)');
+  }
+  return {
+    apiKey,
+    from: process.env.MAIL_FROM || 'Acme <onboarding@resend.dev>',
+  };
+}
+
+async function sendTransactionalEmail({ to, subject, text, html }) {
   const config = getMailConfig();
   const transporter = nodemailer.createTransport({
     host: 'smtp.resend.com',
@@ -202,11 +223,12 @@ export async function sendTransactionalEmail({ to, subject, text, html }) {
     });
     return { ok: true, messageId: info.messageId };
   } catch (err) {
-    // Log server-side; return a safe shape to the route
     console.error('sendMail failed', err);
     return { ok: false, error: 'email_send_failed' };
   }
 }
+
+module.exports = { sendTransactionalEmail };
 ```
 
 ### Pattern B — Resend SDK (`{ data, error }` — often does *not* throw on API errors)
