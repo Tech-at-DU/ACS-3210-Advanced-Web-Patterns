@@ -223,6 +223,7 @@ async function sendTransactionalEmail({ to, subject, text, html }) {
     });
     return { ok: true, messageId: info.messageId };
   } catch (err) {
+    // Log server-side; return a safe shape to the route
     console.error('sendMail failed', err);
     return { ok: false, error: 'email_send_failed' };
   }
@@ -388,7 +389,7 @@ Tomorrow's first 15m:
 
 ---
 
-## Additional Resources (official first)
+## Additional Resources
 
 1. **[Nodemailer](https://nodemailer.com/)** — transport abstraction, Ethereal test accounts, message options.
 2. **[Resend — Node.js SDK](https://resend.com/docs/send-with-nodejs)** — primary lab API docs.
@@ -404,9 +405,16 @@ Tomorrow's first 15m:
 
 ---
 
+<details>
+<summary>For curriculum authors</summary>
+
 ## For curriculum authors
 
-### ADHD run-of-show (whole block)
+<details>
+<summary>For curriculum authors</summary>
+
+
+### Run-of-show (whole block)
 
 | | |
 | --- | --- |
@@ -422,7 +430,7 @@ Today's MVP (1 sentence): send a test email; log messageId (or Ethereal preview 
 
 ### Facilitator notes
 
-**Broken-link note (repo stub):** the Medium “Nodemailer + Mailgun” write-up linked from the old `Emails.md` may be stale. Prefer Resources above. Do **not** demo from the Medium piece.
+**Broken-link note (repo stub):** the Medium “Nodemailer + Mailgun” write-up linked from the old `Emails.md` may be stale. Prefer official docs (Resources above). Do **not** demo from the Medium piece.
 
 - After ACS-4210 same day — keep energy practical; MVP in Lab 1 before perfect templates.
 - Voice: write-like-you-talk. Short blocks. GOAL first. Job-sim framing only.
@@ -444,3 +452,7 @@ Flag for follow-up (do not block today’s live block):
 7. **dotenv / secret loading** — is the course entry still `dotenv.config()` in `server.js`, or has hosting moved to platform env only?
 8. **Handlebars email path** — P06 uses Nodemailer `template: { name, engine, context }` via mailgun transport; plain Nodemailer + Resend may need `handlebars.compile` manually or `nodemailer-express-handlebars`. Which pattern should Wave 2 standardize?
 9. **Idempotency / queues** — out of scope for Day 5 MVP; confirm whether a later session mentions BullMQ / SQS for “email after payment” reliability.
+
+</details>
+
+</details>
