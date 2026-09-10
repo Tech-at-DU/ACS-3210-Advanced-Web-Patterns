@@ -20,7 +20,7 @@
 <!-- omit in toc -->
 ## 🏆 Objectives
 
-*By the end of this class, you'll be able to&hellip;*
+*By the end of this session, you'll be able to&hellip;*
 
 1. Explain why transactional email still matters and when *not* to run your own SMTP relay
 1. Compare Resend / SES / Mailgun / SendGrid at a beginner on-the-job level; use **one** primary path in lab (**Resend**, Ethereal fallback)
@@ -79,6 +79,8 @@ Think and jot (30s), then unmute or chat: name one transactional email you got t
 Say:
 
 > “Today is transactional. If you mix promo into the same stream without consent plumbing, deliverability tanks and lawyers get interested.”
+
+<!-- -->
 
 > **ASK AUDIENCE:** Receipt for a purchase vs weekly newsletter — which is transactional?
 
@@ -140,7 +142,7 @@ Say:
 
 > “If the key is in the client, it’s not a secret anymore — it’s a public payment method for someone else’s spam.”
 
-**JS competence beat:** treat config as a small object you validate once at boot.
+**Send Emails Async — boot check:** treat config as a small object you validate once at boot.
 
 ```js
 function getMailConfig() {
@@ -204,6 +206,8 @@ await transporter.sendMail({
 Say:
 
 > “Anyone can put `from: ceo@yourbank.com` in SMTP. Auth headers + a verified domain are why providers exist. In lab: `from: onboarding@resend.dev` may only go **to the email on your Resend account** (other `to:` → 403). Event sinks need a verified-domain `from`, or use Ethereal. Production wants *your* verified domain.”
+
+<!-- -->
 
 > **ASK AUDIENCE:** Can you trust `from:` alone? Why can anyone set `from: ceo@yourbank.com` in raw SMTP?
 
@@ -317,10 +321,6 @@ Terminal shows a `messageId` **or** an Ethereal preview URL from one successful 
 
 </details>
 
-<aside class="notes">
-Live primary = Resend or Ethereal. Force Ethereal if signup friction spikes. Pete’s Mailgun / P06 is stretch only. Prefer official docs over the stale Medium stub.
-</aside>
-
 <!-- > -->
 
 ## [**15m**] 💻 Activity 1
@@ -357,7 +357,7 @@ Live primary = Resend or Ethereal. Force Ethereal if signup friction spikes. Pet
 
 **MVP definition of done (≤15m):** one successful send logged. Templates polish waits for Activity 2.
 
-If you finish early, help someone in your breakout who is stuck.
+If you finish early, help a peer who’s stuck.
 
 <!-- > -->
 
@@ -382,30 +382,30 @@ If you finish early, help someone in your breakout who is stuck.
 2. Ensure env load happens **once** at boot (`dotenv.config()` in `server.js` / entry).
 3. Wire a minimal route:
 
-```js
-// sketch — adapt to course router style
-app.post('/api/send-test', async (req, res) => {
-  const to = req.body?.to || process.env.MAIL_TO_TEST;
-  if (!to) {
-    return res.status(400).json({ ok: false, error: 'missing_to' });
-  }
+   ```js
+   // sketch — adapt to course router style
+   app.post('/api/send-test', async (req, res) => {
+     const to = req.body?.to || process.env.MAIL_TO_TEST;
+     if (!to) {
+       return res.status(400).json({ ok: false, error: 'missing_to' });
+     }
 
-  const result = await sendTransactionalEmail({
-    to,
-    subject: 'ACS-3210 test',
-    text: 'It works (text).',
-    html: '<strong>It works (html).</strong>',
-  });
+     const result = await sendTransactionalEmail({
+       to,
+       subject: 'ACS-3210 test',
+       text: 'It works (text).',
+       html: '<strong>It works (html).</strong>',
+     });
 
-  if (!result.ok) {
-    return res.status(502).json(result);
-  }
-  return res.status(202).json(result);
-});
-```
+     if (!result.ok) {
+       return res.status(502).json(result);
+     }
+     return res.status(202).json(result);
+   });
+   ```
 
 4. Hit the route; confirm artifact.
-5. **JS stretch inside the same block:** add `text` + `html`; escape any user-provided name if you interpolate into HTML; return stable error codes (`email_send_failed`) instead of raw provider dumps to the client.
+5. **Send Emails Async stretch:** add `text` + `html`; escape any user-provided name if you interpolate into HTML; return stable error codes (`email_send_failed`) instead of raw provider dumps to the client.
 
 ### Stretch (if ahead)
 
@@ -443,8 +443,8 @@ Stuck on:
 Tomorrow's first 15m:
 ```
 
-- What to finish before next class: Activity 2 route + artifact if unfinished
-- Where to submit: per course channel / notes
+- What to finish before the next session: Activity 2 route + artifact if unfinished
+- Where to submit: per shared channel / notes
 - One thing to try if stuck: switch to Ethereal Path A and re-run `scripts/send-test.js`
 
 <!-- > -->
@@ -466,15 +466,13 @@ Tomorrow's first 15m:
 <details>
 <summary>For curriculum authors</summary>
 
-## For curriculum authors
-
 ### In Class
 
 - Open this file → skim the agenda → start Attendance / Warm Up at 4:00.
 - Warm-up is a Zoom variety beat: keep it short; the “transactional email you got this week” prompt is enough.
 - Breakouts of 3–4 for Activity 1 / Activity 2. Visit rooms; do not dump extra instructor direction into the body above.
 - After Activity 1, debrief one failure mode in the main room (403 sandbox `to:`, missing env key, or Ethereal preview URL).
-- Done when learners can send a transactional message from the server, explain why the API key never touches the browser, and name SPF/DKIM/DMARC in one on-the-job sentence each.
+- Done when the room can send a transactional message from the server, explain why the API key never touches the browser, and name SPF/DKIM/DMARC in one on-the-job sentence each.
 - Optional standup sticky in notes:
 
 ```text
