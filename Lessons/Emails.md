@@ -414,7 +414,7 @@ Tomorrow's first 15m:
 <summary>For curriculum authors</summary>
 
 
-### In Class (whole block)
+### Run-of-show
 
 | | |
 | --- | --- |
