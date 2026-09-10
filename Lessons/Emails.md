@@ -1,4 +1,4 @@
-# Sending Emails (Transactional) — ACS-3210 Day 5
+# Sending Emails (Transactional) — Day 5
 
 ⭐️ **GOAL:** Leave able to pick a 2026 provider, keep secrets server-side, send HTML+text via Nodemailer (or Resend SDK), and talk deliverability without hand-waving.
 
