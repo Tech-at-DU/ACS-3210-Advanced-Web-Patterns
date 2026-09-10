@@ -1,21 +1,44 @@
+<!-- Run as a slideshow: reveal-md Lessons/Lesson1.md -w -->
 # Sending Emails (Transactional) — Day 5
 
 ⭐️ **GOAL:** Leave able to pick a 2026 provider, keep secrets server-side, send HTML+text via Nodemailer (or Resend SDK), and talk deliverability without hand-waving.
 
-| **Elapsed** | **Time** | **Activity** |
-| ----------- | -------- | ------------------------- |
-| 0:00 | 0:05 | Why / Objectives |
-| 0:05 | 0:40 | Overview / TT (+ Send Emails Async) |
-| 0:45 | 0:15 | Lab 1 — MVP send |
-| 1:00 | 0:10 | BREAK |
-| 1:10 | 0:30 | Lab 2 — modular `mailer` + route |
-| 1:40 | 0:15 | Build time / stretch (Pete’s purchase hook) |
-| 1:55 | 0:05 | Wrap Up |
-| **TOTAL** | **2:00** | |
+<!-- omit in toc -->
+## ⏱ Agenda
 
----
+- [[**5m**] Attendance &amp; Announcements](#5m-attendance--announcements)
+- [[**5m**] ☀️ Warm Up](#5m-️-warm-up)
+- [[**40m**] 📚 TT: Overview](#40m--tt-overview)
+- [[**15m**] 💻 Activity 1](#15m--activity-1)
+- [[**10m**] 🌴 Break](#10m--break)
+- [[**30m**] 💻 Activity 2](#30m--activity-2)
+- [[**15m**] Stretch — Pete’s purchase hook](#15m-stretch--petes-purchase-hook)
+- [[**5m**] Wrap Up](#5m-wrap-up)
 
-## Why You Should Know This (2 min)
+<!-- > -->
+
+<!-- omit in toc -->
+## 🏆 Objectives
+
+*By the end of this session, you'll be able to&hellip;*
+
+1. Explain why transactional email still matters and when *not* to run your own SMTP relay
+1. Compare Resend / SES / Mailgun / SendGrid at a beginner on-the-job level; use **one** primary path in lab (**Resend**, Ethereal fallback)
+1. Keep secrets safe: API keys in env vars only; never commit; never ship keys to the browser
+1. Send a message with both `html` and `text` bodies; sketch Handlebars vs React Email; name **SPF / DKIM / DMARC** in one sentence each
+1. Write a small async `sendMail` helper that surfaces failures and wire it from an Express route
+
+**How you’ll know:** Activity 1 produces a `messageId` (or Ethereal preview URL) in the terminal; Activity 2 exports `utils/mailer.js` and a POST (or purchase) path that awaits send + returns a clear status.
+
+<!-- > -->
+
+## [**5m**] Attendance &amp; Announcements
+
+Roll call / Zoom names. Any schedule or repo notes for tonight. Point at today’s GOAL above.
+
+<!-- > -->
+
+## [**5m**] ☀️ Warm Up
 
 People have been trying to kill email for years. It still wins for **receipts, password resets, magic links, “your order shipped,” and “something weird happened on your account.”** Those are **transactional** emails — triggered by an app event, expected by one user, time-sensitive.
 
@@ -34,27 +57,15 @@ Say:
 
 **Rookie trap:** shipping `nodemailer` pointed at `smtp.gmail.com` with a personal password is a demo, not a product.
 
-**GOAL:** leave able to pick a 2026 provider, keep secrets server-side, send HTML+text via Nodemailer (or Resend SDK), and talk deliverability without hand-waving.
+Think and jot (30s), then unmute or chat: name one transactional email you got this week.
 
----
+<!-- > -->
 
-## Learning Objectives (3 min)
-
-1. **Explain** why transactional email still matters and when *not* to run your own SMTP relay.
-2. **Compare** Resend / SES / Mailgun / SendGrid at a beginner on-the-job level; use **one** primary path in lab (**Resend**, Ethereal fallback).
-3. **Keep secrets safe:** API keys in env vars only; never commit; never ship keys to the browser.
-4. **Send** a message with both `html` and `text` bodies; sketch Handlebars vs React Email; name **SPF / DKIM / DMARC** in one sentence each.
-5. **Write** a small async `sendMail` helper that surfaces failures (JS competence) and wire it from an Express route.
-
-**How you’ll know:** Lab 1 produces a `messageId` (or Ethereal preview URL) in the terminal; Lab 2 exports `utils/mailer.js` and a POST (or purchase) path that awaits send + returns a clear status.
-
----
-
-## Overview / TT (40 min)
+## [**40m**] 📚 TT: Overview
 
 **Next action:** Destination → providers → Nodemailer abstraction → secrets → templates → auth headers → JS async/error shapes.  
 **Done when:** You can sketch “browser → Express → mailer → provider” and say where the API key lives.  
-**≤2m next after TT:** Open Lab 1; pick Resend *or* Ethereal.
+**≤2m next after TT:** Open Activity 1; pick Resend *or* Ethereal.
 
 ### 1. Transactional vs marketing (~4m)
 
@@ -69,13 +80,22 @@ Say:
 
 > “Today is transactional. If you mix promo into the same stream without consent plumbing, deliverability tanks and lawyers get interested.”
 
-**Pulse check 1 (≤60s):** Receipt for a purchase vs weekly newsletter — which is transactional? Expected: **purchase receipt**.
+<!-- -->
+
+> **ASK AUDIENCE:** Receipt for a purchase vs weekly newsletter — which is transactional?
+
+<details>
+<summary>Answer</summary>
+
+**Purchase receipt.** Triggered by a user/app event, expected by one user, time-sensitive. The weekly newsletter is marketing/bulk.
+
+</details>
 
 ### 2. Providers 2026 — pick one primary (~8m)
 
 Whiteboard the field; **lab primary = Resend**.
 
-| Provider | 2026 vibe (hire-level) | Free-tier reality (verify day-of) | Good fit when… |
+| Provider | 2026 vibe (on-the-job) | Free-tier reality (verify day-of) | Good fit when… |
 | --- | --- | --- | --- |
 | **Resend** | DX-first API; React Email sibling; Nodemailer SMTP supported | 3,000/mo · 100/day · **3 domains** (confirm [Resend pricing](https://resend.com/pricing) day-of) | Labs, modern Node apps |
 | **Amazon SES** | Cheap at scale; AWS IAM surface area | Often generous if already in AWS (esp. EC2-era myths — check current) | You already live in AWS |
@@ -122,7 +142,7 @@ Say:
 
 > “If the key is in the client, it’s not a secret anymore — it’s a public payment method for someone else’s spam.”
 
-**JS competence beat:** treat config as a small object you validate once at boot.
+**Send Emails Async — boot check:** treat config as a small object you validate once at boot.
 
 ```js
 function getMailConfig() {
@@ -137,7 +157,14 @@ function getMailConfig() {
 }
 ```
 
-**Pulse check 2 (≤60s):** Where does `RESEND_API_KEY` live — browser bundle or server env? Expected: **server env only**.
+> **ASK AUDIENCE:** Where does `RESEND_API_KEY` live — browser bundle or server env?
+
+<details>
+<summary>Answer</summary>
+
+**Server env only.** Never in Vite/`VITE_*`, never in a public client bundle, never committed to git.
+
+</details>
 
 ### 4. Templates: HTML + text; Handlebars vs React Email (~8m)
 
@@ -168,7 +195,7 @@ await transporter.sendMail({
 | **React Email** | Component → HTML; pairs naturally with Resend; optional stretch, not required for ACS-3210 MVP |
 | **Handlebars (Resend path)** | `handlebars.compile` → pass `html`/`text`, **or** `nodemailer-express-handlebars` on a Nodemailer transporter. Do **not** use Mailgun `template:` on the Resend path. |
 
-### Spoofing / SPF / DKIM / DMARC — one-slide hire tips
+### Spoofing / SPF / DKIM / DMARC — one-slide tips
 
 | Acronym | One-liner |
 | --- | --- |
@@ -180,7 +207,16 @@ Say:
 
 > “Anyone can put `from: ceo@yourbank.com` in SMTP. Auth headers + a verified domain are why providers exist. In lab: `from: onboarding@resend.dev` may only go **to the email on your Resend account** (other `to:` → 403). Event sinks need a verified-domain `from`, or use Ethereal. Production wants *your* verified domain.”
 
-**Pulse check 3 (≤60s):** Can you trust `from:` alone? Why can anyone set `from: ceo@yourbank.com` in raw SMTP? Expected: **SMTP doesn’t prove domain ownership** — SPF/DKIM/DMARC + verified domain do.
+<!-- -->
+
+> **ASK AUDIENCE:** Can you trust `from:` alone? Why can anyone set `from: ceo@yourbank.com` in raw SMTP?
+
+<details>
+<summary>Answer</summary>
+
+**No.** SMTP doesn’t prove domain ownership — anyone can set an arbitrary `from:`. **SPF / DKIM / DMARC** plus a **verified domain** are what make the sender trustworthy.
+
+</details>
 
 ### 5. Send Emails Async (~14m)
 
@@ -267,13 +303,29 @@ export async function sendTransactionalEmail({ to, subject, html, text }) {
 - Sending email inside the request *before* the DB commit without a clear failure story (at least log + don’t pretend success)
 - Using user-controlled HTML without escaping
 
-**Pulse check 4 (≤60s):** Nodemailer `sendMail` fails — do you `try/catch`, or check a returned `{ error }`? Expected: **`try/catch`** (throws). Resend SDK → check **`{ data, error }`** (often no throw on API errors).
+> **ASK AUDIENCE:** Nodemailer `sendMail` fails — do you `try/catch`, or check a returned `{ error }`?
 
----
+<details>
+<summary>Answer</summary>
 
-## Lab 1 — MVP send (15 min)
+**`try/catch`** — Nodemailer throws / rejects. Resend SDK → check **`{ data, error }`** (often no throw on API errors).
 
-**Work shape:** solo · **MVP** · **visible checkpoint** · **artifact**.
+</details>
+
+> **ASK AUDIENCE:** What is the done-state for Activity 1?
+
+<details>
+<summary>Answer</summary>
+
+Terminal shows a `messageId` **or** an Ethereal preview URL from one successful send (Path A or Path B).
+
+</details>
+
+<!-- > -->
+
+## [**15m**] 💻 Activity 1
+
+**MVP send.** Solo · visible checkpoint · artifact.
 
 | | |
 | --- | --- |
@@ -303,15 +355,19 @@ export async function sendTransactionalEmail({ to, subject, html, text }) {
 3. Nodemailer SMTP **or** `resend` SDK — one path only
 4. Log `messageId` / `data.id`
 
-**MVP definition of done (≤15m):** one successful send logged. Templates polish waits for Lab 2.
+**MVP definition of done (≤15m):** one successful send logged. Templates polish waits for Activity 2.
 
----
+If you finish early, help a peer who’s stuck.
 
-## BREAK (10 min)
+<!-- > -->
 
----
+## [**10m**] 🌴 Break
 
-## Lab 2 — modular mailer + Express (30 min)
+<!-- > -->
+
+## [**30m**] 💻 Activity 2
+
+**Modular mailer + Express.** You do. Same topic, less scaffolding.
 
 | | |
 | --- | --- |
@@ -326,30 +382,30 @@ export async function sendTransactionalEmail({ to, subject, html, text }) {
 2. Ensure env load happens **once** at boot (`dotenv.config()` in `server.js` / entry).
 3. Wire a minimal route:
 
-```js
-// sketch — adapt to course router style
-app.post('/api/send-test', async (req, res) => {
-  const to = req.body?.to || process.env.MAIL_TO_TEST;
-  if (!to) {
-    return res.status(400).json({ ok: false, error: 'missing_to' });
-  }
+   ```js
+   // sketch — adapt to course router style
+   app.post('/api/send-test', async (req, res) => {
+     const to = req.body?.to || process.env.MAIL_TO_TEST;
+     if (!to) {
+       return res.status(400).json({ ok: false, error: 'missing_to' });
+     }
 
-  const result = await sendTransactionalEmail({
-    to,
-    subject: 'ACS-3210 test',
-    text: 'It works (text).',
-    html: '<strong>It works (html).</strong>',
-  });
+     const result = await sendTransactionalEmail({
+       to,
+       subject: 'ACS-3210 test',
+       text: 'It works (text).',
+       html: '<strong>It works (html).</strong>',
+     });
 
-  if (!result.ok) {
-    return res.status(502).json(result);
-  }
-  return res.status(202).json(result);
-});
-```
+     if (!result.ok) {
+       return res.status(502).json(result);
+     }
+     return res.status(202).json(result);
+   });
+   ```
 
-1. Hit the route; confirm artifact.
-2. **JS stretch inside the same block:** add `text` + `html`; escape any user-provided name if you interpolate into HTML; return stable error codes (`email_send_failed`) instead of raw provider dumps to the client.
+4. Hit the route; confirm artifact.
+5. **Send Emails Async stretch:** add `text` + `html`; escape any user-provided name if you interpolate into HTML; return stable error codes (`email_send_failed`) instead of raw provider dumps to the client.
 
 ### Stretch (if ahead)
 
@@ -357,9 +413,9 @@ app.post('/api/send-test', async (req, res) => {
 - Idempotency key (Resend) for retry-safe sends
 - Don’t block the HTTP response forever — log failures; optional queue mention (name only)
 
----
+<!-- > -->
 
-## Build time (15 min)
+## [**15m**] Stretch — Pete’s purchase hook
 
 Optional Pete’s Pets alignment (do **not** require Mailgun signup mid-block if Resend/Ethereal already worked):
 
@@ -367,9 +423,9 @@ Optional Pete’s Pets alignment (do **not** require Mailgun signup mid-block if
 2. Keep redirects/UX working even if email fails — **log** the failure (beginner tip: silent catch that still redirects is OK for UX, bad if you never log).
 3. If continuing the legacy P06 path: Mailgun + `nodemailer-mailgun-transport` — verify **current** Mailgun dashboard steps; ignore outdated Flex Trial blog dates.
 
----
+<!-- > -->
 
-## Wrap Up (5 min)
+## [**5m**] Wrap Up
 
 Takeaways to say out loud:
 
@@ -387,7 +443,11 @@ Stuck on:
 Tomorrow's first 15m:
 ```
 
----
+- What to finish before the next session: Activity 2 route + artifact if unfinished
+- Where to submit: per shared channel / notes
+- One thing to try if stuck: switch to Ethereal Path A and re-run `scripts/send-test.js`
+
+<!-- > -->
 
 ## Additional Resources
 
@@ -403,16 +463,8 @@ Tomorrow's first 15m:
 
 **Do not use as primary:** Medium “Nodemailer + Mailgun” (likely stale; linked from old stub).
 
----
-
 <details>
 <summary>For curriculum authors</summary>
-
-## For curriculum authors
-
-<details>
-<summary>For curriculum authors</summary>
-
 
 ### In Class
 
@@ -432,14 +484,14 @@ Today's MVP (1 sentence): send a test email; log messageId (or Ethereal preview 
 
 **Broken-link note (repo stub):** the Medium “Nodemailer + Mailgun” write-up linked from the old `Emails.md` may be stale. Prefer official docs (Resources above). Do **not** demo from the Medium piece.
 
-- After ACS-4210 same day — keep energy practical; MVP in Lab 1 before perfect templates.
-- Voice: write-like-you-talk. Short blocks. GOAL first. Job-sim framing only.
+- After ACS-4210 same day — keep energy practical; MVP in Activity 1 before perfect templates.
+- Voice: write-like-you-talk. Short blocks. GOAL first.
 - If signup friction spikes → **force Path A Ethereal** so nobody loses the JS async lesson to OAuth.
 - Pete’s Mailgun content is **stretch / after-hours alignment**, not the live primary demo.
-- Topic-only file: no roster / attendance / room-mgmt bits on purpose.
-- Job-sim standing: dropped academic tokens (`Class/lab`, `homework/stretch`) — use lab / stretch / after-hours instead.
+- Live-code the first five minutes of Pattern A only. Then get out of the way.
+- Have one extension ready for rooms that finish Activity 2 early (Handlebars body or purchase hook).
 
-### Node Engineer — open API / stack uncertainties
+### Expert follow-ups
 
 Flag for follow-up (do not block today’s live block):
 
@@ -452,7 +504,5 @@ Flag for follow-up (do not block today’s live block):
 7. **dotenv / secret loading** — is the course entry still `dotenv.config()` in `server.js`, or has hosting moved to platform env only?
 8. **Handlebars email path** — P06 uses Nodemailer `template: { name, engine, context }` via mailgun transport; plain Nodemailer + Resend may need `handlebars.compile` manually or `nodemailer-express-handlebars`. Which pattern should Wave 2 standardize?
 9. **Idempotency / queues** — out of scope for Day 5 MVP; confirm whether a later session mentions BullMQ / SQS for “email after payment” reliability.
-
-</details>
 
 </details>
