@@ -414,7 +414,7 @@ Tomorrow's first 15m:
 <summary>For curriculum authors</summary>
 
 
-### Run-of-show
+### In Class
 
 | | |
 | --- | --- |
