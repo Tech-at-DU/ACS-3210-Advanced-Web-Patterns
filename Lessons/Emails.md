@@ -406,7 +406,7 @@ Tomorrow's first 15m:
 
 ## For curriculum authors
 
-### ADHD run-of-show (whole block)
+### Run-of-show (whole block)
 
 | | |
 | --- | --- |
