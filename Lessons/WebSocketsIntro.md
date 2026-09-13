@@ -1,5 +1,5 @@
 <!-- Run as a slideshow: reveal-md Lessons/Lesson1.md -w -->
-# Intro to WebSockets — Class 6
+# Intro to WebSockets — Day 6
 
 ⭐️ **GOAL:** Leave able to say why a long-lived socket exists, attach Socket.IO to an `http.Server` (not `app.listen`), pick the right `emit`, and extract connection handlers into a small JS module.
 
@@ -19,7 +19,7 @@
 <!-- omit in toc -->
 ## 🏆 Objectives
 
-*By the end of this session, you'll be able to&hellip;*
+*By the end of this class, you'll be able to&hellip;*
 
 1. Explain **bidirectional, full-duplex** traffic in one breath, and name when a socket is the wrong tool (one-shot request/response)
 1. Sketch the **HTTP upgrade** (`101 Switching Protocols`) and say that later frames are **WS / WSS**, not HTTP
@@ -39,7 +39,7 @@ Roll call / Zoom names. Any schedule or repo notes for tonight. Point at today�
 
 ## [**10m**] ☀️ Warm Up
 
-<p align="center"><img src="assets/litebrite.gif"></p>
+<p align="center"><img src="assets/litebrite.gif" alt="LiteBrite live board demo gif"></p>
 
 Products that feel *live* are not refreshing the page. A board lights up. A chat row appears. A cursor moves. That is a **long-lived connection**, not a new HTTP request per click.
 
@@ -49,7 +49,7 @@ Products that feel *live* are not refreshing the page. A board lights up. A chat
 - In another tab, open **Play Now** if the site offers it
 - Watch a cell change from *someone else* — you did not reload
 
-<p align="center"><img src="assets/howitworks.jpg"></p>
+<p align="center"><img src="assets/howitworks.jpg" alt="How a live board updates over a long-lived connection"></p>
 
 Say:
 
@@ -75,7 +75,7 @@ Think and jot (30s), then unmute or chat: name one product you used this week th
 
 ### 1. Why a long-lived socket (~5m)
 
-<p align="center"><img src="assets/chat-example.gif" width="600" /></p>
+<p align="center"><img src="assets/chat-example.gif" width="600" alt="Chat example showing messages arriving without a page reload" /></p>
 
 **Bidirectional:** both parties send and receive.  
 **Full-duplex:** send and receive can happen **at the same time** — like a phone call, not a walkie-talkie.
@@ -110,13 +110,13 @@ Say:
 The WebSocket standard starts with an **HTTP handshake**, then **switches** to WS / WSS. Later messages are frames, not `GET`/`POST`.
 
 <p align="center">
-  <img src="assets/WebSockets-Diagram.png" height="420">
+  <img src="assets/WebSockets-Diagram.png" height="420" alt="WebSocket handshake then frame diagram">
 </p>
 
 Same picture, upgrade called out:
 
 <p align="center">
-  <img src="assets/WebSockets-Diagram-Explained.png" height="420">
+  <img src="assets/WebSockets-Diagram-Explained.png" height="420" alt="WebSocket upgrade annotated: HTTP 101 then WS frames">
 </p>
 
 Request (shape from the opening handshake — browsers set `Sec-WebSocket-Key` for you):
@@ -227,9 +227,9 @@ Say:
 
 </details>
 
-### 4. JS competence — events, closures, modules (~14m)
+### 4. Realtime handlers — events, closures, modules (~14m)
 
-Goal: practice **real Node JS**. The socket is the vehicle.
+Goal: ship **realtime handlers** in Node — named events, closures, a small module. The socket is the vehicle.
 
 Socket.IO’s API is **EventEmitter-shaped**: `on` on one side, `emit` on the other. Any JSON-serializable value is fine. **Do not** `JSON.stringify` objects before `emit` — the library already encodes them.
 
@@ -435,7 +435,7 @@ If you finish early, help a peer who’s stuck.
 
 ## [**30m**] 💻 Activity 2
 
-**JS competence — modular handlers + the right emit.** You do. Same topic, less scaffolding.
+**Realtime handlers — modular emit + the right audience.** You do. Same topic, less scaffolding.
 
 | | |
 | --- | --- |
@@ -481,7 +481,7 @@ Stuck on:
 Tomorrow's first 15m:
 ```
 
-- What to finish before the next session: Activity 2 two-tab artifact if unfinished
+- What to finish before the next block: Activity 2 two-tab artifact if unfinished
 - Where to submit: per shared channel / notes
 - One thing to try if stuck: serve via `http://localhost:3000`, not `file://`; confirm `server.listen`, not `app.listen`
 
@@ -503,6 +503,8 @@ Tomorrow's first 15m:
 <details>
 <summary>For curriculum authors</summary>
 
+## For curriculum authors
+
 ### In Class
 
 | | |
@@ -522,27 +524,27 @@ Today's MVP (1 sentence): two tabs share one chat line; handlers live in sockets
 **Broken-link note (repo stub):** PubNub (2015), HTML5 Rocks, and the old CodePen were the previous Resources list. Prefer official Socket.IO v4 + MDN (Resources above). Do **not** demo from those stubs.
 
 - Voice: write-like-you-talk. Short blocks. GOAL first.
-- JS competence is the outcome; sockets are the vehicle. If the clock slips, **cut handshake history**, not the module / emit / ack beat.
+- Realtime handlers are the outcome; sockets are the vehicle. If the clock slips, **cut handshake history**, not the module / emit / ack beat.
 - Official chat guide still uses **Express 4 + CJS** (`require`). Match it live. ESM only if a room already set `"type": "module"`.
 - Live-code the first five minutes of `http.createServer` + `new Server(server)` only. Then get out of the way.
 - Two-tab demo is the aha. Do it once on the projector before Activity 2.
 - If `litebrite.live` is down, gif + `howitworks.jpg` — do not burn Warm Up on a dead tab.
 - `file://` and `app.listen` are the two failure modes you will see. Debrief one in the main room after Activity 1.
-- Class 7 owns polling vs sockets and alternatives. Name polling in one sentence tonight; do not steal that block.
-- Challenge 2 / Make Chat are **after hours / later classes**, not tonight’s gate. Activity 2 stretch points at one official homework bullet.
+- Day 7 owns polling vs sockets and alternatives. Name polling in one sentence tonight; do not steal that block.
+- Challenge 2 / Make Chat are **after hours / later days**, not tonight’s gate. Activity 2 stretch points at one official homework bullet.
 - Have one extension ready for rooms that finish Activity 2 early (ack or `broadcast` + local append).
 
 ### Expert follow-ups
 
 Flag for follow-up (do not block today’s live block):
 
-1. **Guide vs course default** — keep Class 6 on official chat-example **CJS + Express 4**, or migrate snippets to Express 5 / ESM once the guide moves?
+1. **Guide vs course default** — keep Day 6 on official chat-example **CJS + Express 4**, or migrate snippets to Express 5 / ESM once the guide moves?
 2. **Release pin** — cite `socket.io@4.8.3` (Dec 2025) in handouts, or `npm install socket.io` and re-read [Server installation](https://socket.io/docs/v4/server-installation/) each term?
 3. **LiteBrite** — is `litebrite.live` still the Warm Up, or should the gif + a local board replace the live site?
-4. **Rooms on Class 6** — `join` / `to` are documented and tempting; confirm they stay **named only** tonight so Class 7 / Make Chat still have a climb.
+4. **Rooms on Day 6** — `join` / `to` are documented and tempting; confirm they stay **named only** tonight so Day 7 / Make Chat still have a climb.
 5. **Auth on handshake** — `socket.handshake` exists; cookie/token checks are out of scope for the MVP. Which later session owns them?
 6. **Challenge 2 wording** — still “complete the guide + at least 2 homework bullets,” or retitle now that Activity 2 already starts the guide?
-7. **Native `WebSocket` vs Socket.IO** — one contrast slide tonight; confirm we do **not** add a `ws` server lab on Class 6.
+7. **Native `WebSocket` vs Socket.IO** — one contrast slide tonight; confirm we do **not** add a `ws` server lab on Day 6.
 8. **Acknowledgements vs Promises** — `emitWithAck` exists on the server API; tonight teaches the **callback-as-last-arg** from the emitting-events guide. Standardize later?
 
 </details>
