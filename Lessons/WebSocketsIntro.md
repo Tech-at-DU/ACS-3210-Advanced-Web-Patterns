@@ -1,7 +1,7 @@
-<!-- Run as a slideshow: reveal-md Lessons/Lesson1.md -w -->
+<!-- Run as a slideshow: reveal-md Lessons/WebSocketsIntro.md -w -->
 # Intro to WebSockets — Day 6
 
-⭐️ **GOAL:** Leave able to say why a long-lived socket exists, attach Socket.IO to an `http.Server` (not `app.listen`), pick the right `emit`, and extract connection handlers into a small JS module.
+⭐️ **GOAL:** Leave able to explain why a long-lived socket fits live apps, attach Socket.IO 4 to an `http.Server` with Express 5, choose the right emit audience, and extract connection handlers into a small CommonJS module.
 
 <!-- omit in toc -->
 ## ⏱ Agenda
@@ -10,8 +10,8 @@
 - [[**10m**] ☀️ Warm Up](#10m-️-warm-up)
 - [[**40m**] 📚 TT: Overview](#40m--tt-overview)
 - [[**10m**] 🌴 Break](#10m--break)
-- [[**20m**] 💻 Activity 1](#20m--activity-1)
-- [[**30m**] 💻 Activity 2](#30m--activity-2)
+- [[**20m**] 💻 Activity 1: Attach Socket.IO to HTTP Server](#20m--activity-1-attach-socketio-to-http-server)
+- [[**30m**] 💻 Activity 2: Emit Across Tabs and Extract Handlers](#30m--activity-2-emit-across-tabs-and-extract-handlers)
 - [[**5m**] Wrap Up](#5m-wrap-up)
 
 <!-- > -->
@@ -19,21 +19,21 @@
 <!-- omit in toc -->
 ## 🏆 Objectives
 
-*By the end of this class, you'll be able to&hellip;*
+*By the end of this session, you'll be able to&hellip;*
 
 1. Explain **bidirectional, full-duplex** traffic in one breath, and name when a socket is the wrong tool (one-shot request/response)
 1. Sketch the **HTTP upgrade** (`101 Switching Protocols`) and say that later frames are **WS / WSS**, not HTTP
-1. Attach Socket.IO to a Node **`http.Server`** that also serves Express — and say why `app.listen(3000)` fails
+1. Attach Socket.IO 4 to a Node **`http.Server`** that also serves Express 5 — and say why `app.listen(3000)` fails
 1. Write JS that **registers named handlers**, **closes over `socket`**, **guards payloads**, and **exports** a `registerChatHandlers(io)` module
 1. Pick the right emit: `socket.emit` / `socket.broadcast.emit` / `io.emit` (and name `socket.join` + `io.to(room).emit` as the next move)
 
-**How you’ll know:** Activity 1 prints `a user connected` and one inbound `chat message` in the terminal. Activity 2 serves two browser tabs that see the same message, from a file that `module.exports` the handlers.
 
 <!-- > -->
 
 ## [**5m**] Attendance &amp; Announcements
 
-Roll call / Zoom names. Any schedule or repo notes for tonight. Point at today’s GOAL above.
+Tonight is the phone-call mental model and the wiring: Express 5 + `http.Server` + Socket.IO 4. Day 7 is tradeoffs in the wild plus lab time on [Make Chat Tutorial](https://github.com/Tech-at-DU/Make-Chat-Tutorial).
+
 
 <!-- > -->
 
@@ -51,8 +51,6 @@ Products that feel *live* are not refreshing the page. A board lights up. A chat
 
 <p align="center"><img src="assets/howitworks.jpg" alt="How a live board updates over a long-lived connection"></p>
 
-Say:
-
 > “HTTP is a letter. You send one, you get one back, the clerk hangs up. A WebSocket is a phone call: both sides can talk, and they can talk at the same time.”
 
 | HTTP(S) | WS / WSS |
@@ -61,7 +59,7 @@ Say:
 | Client usually starts every exchange | Server can **push** without being asked again |
 | Great for documents, forms, REST | Great for chat, presence, live boards, collab cursors |
 
-**Rookie trap:** treating every “live” UI as a socket problem. A receipt page that loads once is still HTTP.
+> **📈 PROTIP:** A receipt page that loads once is still HTTP. “Live UI” alone does not prove you need a socket.
 
 Think and jot (30s), then unmute or chat: name one product you used this week that updated **without** you refreshing.
 
@@ -71,7 +69,6 @@ Think and jot (30s), then unmute or chat: name one product you used this week th
 
 **Next action:** Why a socket → upgrade → attach to `http.Server` → JS handlers/modules → the right emit.  
 **Done when:** You can sketch “browser `io()` → same-origin Socket.IO → `http.Server` + Express” and say which `emit` reaches whom.  
-**≤2m next after TT:** Open Activity 1; empty folder; `npm install express@4 socket.io`.
 
 ### 1. Why a long-lived socket (~5m)
 
@@ -90,13 +87,11 @@ Use it when the **server** has something to say and cannot wait for the next pag
 
 Socket.IO is **not** the WebSocket standard. It is a library: it prefers WebSocket after an HTTP handshake, can fall back to HTTP long-polling, and adds **named events**, **rooms**, **acknowledgements**, and **reconnect**. The protocol underneath is still **WS** or **WSS**.
 
-Say:
-
 > “Today the pattern is a live channel. The outcome is JS you would ship: handlers, closures, modules, and an emit you can defend in review.”
 
 <!-- -->
 
-> **ASK AUDIENCE:** Slack-style live board vs loading a blog post — which needs a long-lived socket?
+> **💬 ASK QUESTION:** Slack-style live board vs loading a blog post — which needs a long-lived socket?
 
 <details>
 <summary>Answer</summary>
@@ -145,7 +140,7 @@ Sec-WebSocket-Protocol: chat
 1. Client sends `Sec-WebSocket-Key` — a nonce. The browser adds it; you do not invent it in page JS.
 1. Server answers `101` plus `Sec-WebSocket-Accept` derived from that key. That proves “I speak WebSocket,” not “this user is logged in.”
 
-**Rookie trap:** treating the upgrade as authentication. It is a protocol switch. Identity still lives in **your** handshake checks (cookies, tokens) on the server — out of scope for tonight’s MVP.
+> **‼️ BE AWARE:** The upgrade is a protocol switch, not authentication. Identity still lives in **your** handshake checks (cookies, tokens) — out of scope for tonight’s MVP.
 
 Native browser API (MDN `WebSocket`) sends **strings / binary**. You stringify yourself:
 
@@ -212,13 +207,11 @@ That script tag is the client the Socket.IO server **serves for you** at `GET /s
 | `io` | Socket.IO — upgrade + events on **that** server |
 | `io()` in the browser | Client; default URL is the page’s host |
 
-Say:
-
 > “Express handles HTTP routes. Socket.IO rides the same port and steals the upgrade. If someone asks why both, that’s the sentence.”
 
 <!-- -->
 
-> **ASK AUDIENCE:** Does Socket.IO attach to the Express `app`, or to the `http.Server`?
+> **💬 ASK AUDIENCE:** Does Socket.IO attach to the Express `app`, or to the `http.Server`?
 
 <details>
 <summary>Answer</summary>
@@ -370,7 +363,7 @@ io.on('connection', (socket) => {
 
 <!-- -->
 
-> **ASK AUDIENCE:** Server handles `chat message` with `socket.emit('chat message', msg)` — who sees it?
+> **💬 QUICK CHECK:** Server handles `chat message` with `socket.emit('chat message', msg)` — who sees it?
 
 <details>
 <summary>Answer</summary>
@@ -381,13 +374,10 @@ io.on('connection', (socket) => {
 
 ### 6. Bridge into practice (~2m)
 
-Say:
-
-> “Activity 1: empty folder, Express 4 + Socket.IO, `http.createServer`, one tab, terminal says connected and logs one message. Activity 2: extract `registerChatHandlers`, `io.emit` to two tabs. Stretch inside Activity 2 if you finish early. Break next.”
 
 <!-- -->
 
-> **ASK AUDIENCE:** What is the done-state for Activity 1?
+> **💬 YOUR TURN:** What is the done-state for Activity 1?
 
 <details>
 <summary>Answer</summary>
@@ -401,39 +391,44 @@ Terminal shows `a user connected` (and a disconnect if you refresh), plus one in
 ## [**10m**] 🌴 Break
 
 Stand up. Leave the process running if you want — or kill it and restart after.  
-**≤2m next when back:** open Activity 1 if you have not started; do not invent a second stack.
 
 <!-- > -->
 
-## [**20m**] 💻 Activity 1
+## [**20m**] 💻 Activity 1: Attach Socket.IO to HTTP Server
+
+> **✅ DONE WHEN:** Terminal prints a connect line and one inbound `chat message`. One browser tab on `http://localhost:3000` (not `file://`).
 
 **Connection + one emit.** Solo · visible checkpoint · artifact.
 
 | | |
 | --- | --- |
-| **Next action** | Empty folder → `npm install express@4 socket.io` → `http.createServer(app)` → `new Server(server)` → serve `index.html`. |
+| **Next action** | Empty folder → `npm install express@5 socket.io` → `http.createServer(app)` → `new Server(server)` → serve `index.html`. |
 | **Done when** | Terminal prints `a user connected` and one `chat message` line from the form. |
 | **Artifact** | Screenshot or pasted log lines in your notes / shared channel when asked. |
 | **Checkpoint (visible)** | “I see a user connected” in chat or unmuted shout-out. |
 
 ### Steps
 
-Follow the official [Socket.IO chat getting started](https://socket.io/get-started/chat) through **Emitting events** (log the message on the server). Stay on **Express 4 + CJS** — that is what the guide still ships.
+Follow the official [Socket.IO chat getting started](https://socket.io/get-started/chat) through **Emitting events** (log the message on the server). Stay on **Express 5 + CJS** — that is what the guide still ships.
 
 1. `mkdir` a throwaway folder. `npm init -y`. Unique `"name"` (not `socket.io` / `express`).
-2. `npm install express@4 socket.io`
+2. `npm install express@5 socket.io`
 3. `index.js`: Express `app`, `http.createServer(app)`, `new Server(server)`, `app.get('/', ... sendFile ...)`, `io.on('connection', ...)`, **`server.listen(3000)`**
 4. `index.html`: form + `<script src="/socket.io/socket.io.js"></script>` + `const socket = io();` + submit → `socket.emit('chat message', input.value)`
 5. Run `node index.js`. Open `http://localhost:3000` (not the file on disk).
 6. Submit once. Confirm the terminal log.
 
-**MVP definition of done (≤20m):** one connection + one inbound event logged. Broadcast waits for Activity 2.
 
 If you finish early, help a peer who’s stuck.
 
 <!-- > -->
 
-## [**30m**] 💻 Activity 2
+> **📈 TIP:** Unique `package.json` `"name"` — not `socket.io` / `express` — avoids install confusion.
+> **FINISHED EARLY?** Log `socket.id` on connect, or sketch `socket.broadcast.emit` for Activity 2.
+
+## [**30m**] 💻 Activity 2: Emit Across Tabs and Extract Handlers
+
+> **✅ SHIP WHEN:** Two browser tabs share a message via `io.emit` (or broadcast + local append), and handlers live in a `module.exports` file (or you are one clear extract step away).
 
 **Realtime handlers — modular emit + the right audience.** You do. Same topic, less scaffolding.
 
@@ -463,6 +458,10 @@ Official homework ideas — do **one**: connect/disconnect broadcast, nicknames,
 
 <!-- > -->
 
+> **‼️ WATCH OUT:** Opening `index.html` via `file://` skips the Socket.IO handshake origin. Serve from `http://localhost:3000`.
+> **FINISHED EARLY?** Prefer `socket.broadcast.emit` plus local append, or add a typing event from the official homework list.
+
+
 ## [**5m**] Wrap Up
 
 Takeaways to say out loud:
@@ -473,7 +472,6 @@ Takeaways to say out loud:
 4. **`io.emit` / `broadcast` / `socket.emit`** are different audiences — say which one you meant.
 5. Acknowledgements are a **callback as the last `emit` argument**, not a Promise unless you wrap them.
 
-**≤2m wrap sticky (optional):**
 
 ```text
 Shipped today:
@@ -500,8 +498,10 @@ Tomorrow's first 15m:
 
 **Do not use as primary:** old PubNub / HTML5 Rocks / CodePen links from the previous stub (stale stacks; they are not the Socket.IO v4 path).
 
+## For Curriculum Authors
+
 <details>
-<summary>For curriculum authors</summary>
+<summary>For Curriculum Authors</summary>
 
 ## For curriculum authors
 
@@ -511,7 +511,6 @@ Tomorrow's first 15m:
 | --- | --- |
 | **Next action** | Open this file → skim the agenda table → start Why / Objectives at the hour. |
 | **Done when** | Two tabs share a message from a module that exports `registerChatHandlers`, and you can say why `app.listen` fails. |
-| **≤2m next** | Optional standup sticky in your notes: Feeling / Behind\|On track\|Ahead / Today’s MVP. |
 
 ```text
 Feeling (1 word):
@@ -525,7 +524,7 @@ Today's MVP (1 sentence): two tabs share one chat line; handlers live in sockets
 
 - Voice: write-like-you-talk. Short blocks. GOAL first.
 - Realtime handlers are the outcome; sockets are the vehicle. If the clock slips, **cut handshake history**, not the module / emit / ack beat.
-- Official chat guide still uses **Express 4 + CJS** (`require`). Match it live. ESM only if a room already set `"type": "module"`.
+- Official chat guide still uses **Express 5 + CJS** (`require`). Match it live. ESM only if a room already set `"type": "module"`.
 - Live-code the first five minutes of `http.createServer` + `new Server(server)` only. Then get out of the way.
 - Two-tab demo is the aha. Do it once on the projector before Activity 2.
 - If `litebrite.live` is down, gif + `howitworks.jpg` — do not burn Warm Up on a dead tab.
@@ -538,7 +537,7 @@ Today's MVP (1 sentence): two tabs share one chat line; handlers live in sockets
 
 Flag for follow-up (do not block today’s live block):
 
-1. **Guide vs course default** — keep Day 6 on official chat-example **CJS + Express 4**, or migrate snippets to Express 5 / ESM once the guide moves?
+1. **Guide vs course default** — Day 6 pins **CJS + Express 5** with Socket.IO 4 (smoke-tested). Re-check the official chat guide day-of if its default major changes.
 2. **Release pin** — cite `socket.io@4.8.3` (Dec 2025) in handouts, or `npm install socket.io` and re-read [Server installation](https://socket.io/docs/v4/server-installation/) each term?
 3. **LiteBrite** — is `litebrite.live` still the Warm Up, or should the gif + a local board replace the live site?
 4. **Rooms on Day 6** — `join` / `to` are documented and tempting; confirm they stay **named only** tonight so Day 7 / Make Chat still have a climb.
