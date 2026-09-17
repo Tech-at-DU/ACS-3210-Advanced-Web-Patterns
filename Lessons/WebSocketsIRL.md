@@ -1,201 +1,260 @@
-<!-- Run this slideshow via the following command: reveal-md README.md -w -->
-<!-- .slide: data-background="./../Slides/images/header.svg" data-background-repeat="none" data-background-size="40% 40%" data-background-position="center 10%" class="header" -->
-# Day 7: Working with WebSockets
+<!-- Run as a slideshow: reveal-md Lessons/WebSocketsIRL.md -w -->
+# WebSockets in Real Life — Day 7
 
-<!-- > -->
+⭐️ **GOAL:** Leave able to choose WebSockets vs polling vs SSE for a real feature, name reconnect and firewall failure modes, and push a Make Chat / challenge MVP that uses Socket.IO for two-way traffic.
 
 <!-- omit in toc -->
 ## ⏱ Agenda
 
-1. [[**20m**] ☀️ **Warm Up**: WebSockets vs. HTTP](#20m-%E2%98%80%EF%B8%8F-warm-up-websockets-vs-http)
-1. [[**30m**] 💬 **TT**: WebSockets In Depth](#30m-%F0%9F%92%AC-tt-websockets-in-depth)
-   1. [Without WebSockets](#without-websockets)
-   1. [Advantages of WebSockets](#advantages-of-websockets)
-   1. [Disadvantages of WebSockets](#disadvantages-of-websockets)
-   1. [Modern Alternatives to WebSockets](#modern-alternatives-to-websockets)
-1. [[**15m**] 🌴 **BREAK**](#15m-%F0%9F%8C%B4-break-docsify-ignore)
-1. [[**60m**] 💻 **Activity**: Tutorial and Challenge Time](#60m-%F0%9F%92%BB-activity-tutorial-and-challenge-time)
-1. [[**05m**] 🔄 **Recap**: Today's Takeaways](#05m-%F0%9F%94%84-recap-todays-takeaways)
+- [[**5m**] Attendance &amp; Announcements](#5m-attendance--announcements)
+- [[**15m**] ☀️ Warm Up](#15m-️-warm-up)
+- [[**35m**] 📚 TT: Overview](#35m--tt-overview)
+- [[**10m**] 🌴 Break](#10m--break)
+- [[**20m**] 💻 Activity 1: Finish Make Chat Core Path](#20m--activity-1-finish-make-chat-core-path)
+- [[**30m**] 💻 Activity 2: Challenge MVP or Whiteboard Inspiration](#30m--activity-2-challenge-mvp-or-whiteboard-inspiration)
+- [[**5m**] Wrap Up](#5m-wrap-up)
 
 <!-- > -->
 
 <!-- omit in toc -->
 ## 🏆 Objectives
 
-1. Compare and contrast WebSockets with alternative ways to update web pages asynchronously.
-1. Break down a classic WebSocket implementation into it's individual parts.
-1. Apply WebSockets to a scenario of the student's choosing.
+*By the end of this session, you'll be able to&hellip;*
+
+1. **Compare** short polling, long polling, WebSockets, and SSE — and pick the fit for a one-way vs two-way feature.
+2. **Explain** why corporate firewalls and dropped sockets need explicit reconnect logic (libraries help; they are not magic).
+3. **Reuse** Day 6 wiring: Socket.IO on `http.Server`, right `emit` audience, handlers in a module.
+4. **Ship** progress on Make Chat Tutorial and/or start [`Challenges/Websockets.md`](../Challenges/Websockets.md) with a clear done state.
 
 <!-- > -->
 
-## [**20m**] ☀️ **Warm Up**: WebSockets vs. HTTP
+## [**5m**] Attendance &amp; Announcements
 
-First, take `10` minutes to read this excellent article: [HTTP vs Websockets: A performance comparison | by David Luecke | The Feathers Flightpath](https://blog.feathersjs.com/http-vs-websockets-a-performance-comparison-da2533f13a77), then write down and share your answers to the following questions in breakout groups:
-
-1. At what total did the HTTP benchmark top out at?
-1. At what total did the WS benchmark top out at?
-1. What is different about WebSockets that would allow for two drastically different benchmarks? Answer in your own words!
+Day 6 was the phone-call mental model and `http.Server` + Socket.IO. Today is **when that tool is the right call**, what breaks in the wild, and **lab time** on Make Chat + the WebSockets challenge. Challenge homework can finish after hours — tonight’s gate is a visible realtime MVP slice.
 
 <!-- > -->
 
-## [**30m**] 💬 **TT**: WebSockets In Depth
+## [**15m**] ☀️ Warm Up
 
-The WebSockets protocol ushered in a new era of real-time communication, collaboration, and interactivity on the Web.
+Skim (or revisit) [HTTP vs WebSockets: a performance comparison](https://blog.feathersjs.com/http-vs-websockets-a-performance-comparison-da2533f13a77) for **five minutes**. Then answer in chat or unmute:
 
-Let's explore some other ways we achieved similar results back in the old days!
+1. Roughly where did the HTTP benchmark top out vs the WS one (order of magnitude is enough)?
+2. In your own words: what about the connection model explains that gap?
+
+If the article is slow to load, use this table instead and still answer #2:
+
+| Style | Pattern | Feels “live” when… |
+| --- | --- | --- |
+| Short poll | Client asks on a timer | The timer fires — even if nothing changed |
+| Long poll | Server holds until there is news | A message arrives, then client reconnects |
+| WebSocket | Upgrade once, frames both ways | Either side pushes |
+| SSE | Server → client stream over HTTP | Server pushes; client mostly listens |
+
+**Warm-up prompt:** Name one product feature that is **one-way push** (SSE / poll might win) and one that is **two-way** (WS earns its keep).
+
+> **📈 PROTIP:** “Live UI” is not automatically a socket problem. A receipt page that loads once is still HTTP.
 
 <!-- > -->
 
-### Without WebSockets
+## [**35m**] 📚 TT: Overview
 
-Before the protocol existed, web developers used the following tricks to mimic two way communication between the client and server.
+**Next action:** Without sockets → WS tradeoffs → modern alternatives → Day 6 wiring recall → lab brief.  
+**Done when:** You can recommend poll / SSE / WS for a ticket and name one reconnect failure mode.
 
-<!-- > -->
+### 1. Before WebSockets — The Old Tricks (~8m)
 
-#### Short Polling
+**Short polling:** timer in the browser, request every N seconds, update the DOM even when empty. Simple. Burns the server. Never truly in sync.
 
-**Short Polling** is a looping technique written in client side JavaScript.
-
-Think of it like a timer that goes off every 10 seconds.
-
-After the timer goes off, we check for new messages we may have received in the last 10 seconds between requests.
-
- Once we receive the response, we can immediately update the page with the result --- _even if there are no messages_.
-
-Furthermore, your server will be bombarded with requests every 10 seconds, even if the user is doing something else, fell asleep, or walked away from their computer.
-
-- Can you think of any **advantages** to this?
-- Any **disadvantages?**
-
-
-<details>
-  <summary>Click to reveal answers</summary>
-
-  1. Polling responses can’t really be in 100% real time and in sync
-  1. Polling requiring 3 round-trips _(TCP SIN, SSL, and Data)_
-  1. Timeouts _(Connection getting closed by the server if idle too long)
-
-</details>
-
----
-
-#### Long Polling
-
-**Long Polling** is implemented similarly --- but has a distinct advantage. Long polling delivers messages without a delay, _and_ can detect scenarios where the client disconnected but still has the browser open!
-
-![Image via WikiPedia](https://javascript.info/article/long-polling/long-polling.svg)
-
-
-##### Workflow _<small>([source](https://javascript.info/long-polling#long-polling))</small>_
-
-1. A request is sent to the server.
-1. The server doesn’t close the connection until it has a message to send.
-1. When a message appears, the server responds to the request with it.
-1. The browser makes a new request immediately.
-1. The situation when the browser sent a request and has a pending connection with the server, is standard for this method.
-   - Only when a message is delivered, the connection is reestablished.
-   - If the connection is lost, because of, say, a network error, the browser immediately sends a new request.
+**Long polling:** request stays open until the server has something (or times out). Browser opens the next request immediately. Better latency when messages are rare; still one HTTP conversation per message burst; headers and auth tax every time.
 
 ```js
 async function waitForDataFromServer() {
-  let response = await fetch("/updates");
-  let elementToUpdate = document.getElementById("latest-updates");
+  const response = await fetch("/updates");
+  const el = document.getElementById("latest-updates");
 
   if (response.status === 200) {
-    // Get and show the message somewhere in the DOM.
-    let newData = await response.text();
-    elementToUpdate.innerHTML = "NEW: " + newData;
-
-    // Call waitForDataFromServer() again to get the next message.
+    el.textContent = "NEW: " + (await response.text());
     await waitForDataFromServer();
-  }
-  else {
-    // If the response contains an error, show the error text on the page.
-    elementToUpdate.innerHTML = "ERROR: " + response.statusText
-
-    // After the user responds to the alert, reconnect (in one second)
-    await new Promise(resolve => setTimeout(resolve, 1000));
-
-    // Once we've reconnected, listen for updates.
+  } else {
+    el.textContent = "ERROR: " + response.statusText;
+    await new Promise((r) => setTimeout(r, 1000));
     await waitForDataFromServer();
   }
 }
-
-// Call the function when the page loads so we can listen for updates.
-waitForDataFromServer();
 ```
 
-Long polling works great in situations when messages are rare: every message is a separate request, supplied with headers, authentication, and so on. High traffic, combined with frequent messages, can slow down servers quickly.
+> **💬 ASK QUESTION:** Messages arrive about once an hour. Is long polling unreasonable?
 
-In 2008, we welcomed the WebSocket standard to address these concerns!
+<details>
+<summary>Answer</summary>
+
+**Often fine.** Rare messages + hold-until-data is exactly where long polling shines. High-frequency fanout is where it gets expensive.
+
+</details>
+
+### 2. Why Teams Still Pick WebSockets (~8m)
+
+- Bidirectional, full-duplex after the upgrade (`101` then WS/WSS frames — Day 6)
+- Server can push without waiting for the next client poll
+- Binary or text frames; custom events (Socket.IO) without inventing a new HTTP route per ping
+- Great fit: chat, presence, collab cursors, multiplayer, live boards
+
+Costs you must say in review:
+
+- Longer-lived sessions — overkill for a one-shot form
+- Packet-inspecting firewalls (common on corporate networks) may kill WS; you need fallback or a clear error UX
+- Reconnect is **your** problem (or your library’s). Dropped sockets do not auto-heal unless you implement it
+- Auth and sticky sessions get real once you have more than one server
+
+> **💬 ASK AUDIENCE:** A dashboard only needs server → browser stock ticks. Client never sends after subscribe. Is WebSocket the best default?
+
+<details>
+<summary>Answer</summary>
+
+**Not always.** **SSE** (or even authenticated poll) is often enough for one-way push — simpler mental model, HTTP-friendly infrastructure. Use WS when the client must talk back on the same long-lived channel.
+
+</details>
+
+### 3. Modern Alternatives (Pick With Intent) (~7m)
+
+| Need | Lean toward |
+| --- | --- |
+| Classic request/response | HTTP / REST |
+| Server → client only | SSE, or a message queue + poll |
+| Both directions, low latency | WebSockets (raw or Socket.IO) |
+| Cross-service async work | Queues (e.g. SQS) — not a browser socket |
+
+We skip inventing a custom protocol tonight. Socket.IO is the seatbelt: reconnect helpers, fallbacks, named events. Raw `WebSocket` is fine when you want the metal.
+
+> **💬 QUICK CHECK:** Day 6 used `io.emit` for chat. Which alternative emit keeps the sender from getting their own message on the wire?
+
+<details>
+<summary>Answer</summary>
+
+**`socket.broadcast.emit`** — everyone except the sender. Or append locally and broadcast. Day 6 stretch covered this.
+
+</details>
+
+### 4. Day 6 Wiring — 60-Second Recall (~5m)
+
+- `http.createServer(app)` then `new Server(server)` — **`app.listen` will not mount Socket.IO**
+- Named handlers, close over `socket`, guard payloads, `module.exports` a `registerChatHandlers(io)`
+- Audiences: `socket.emit` / `socket.broadcast.emit` / `io.emit` (+ rooms later with `join` / `to`)
+
+> **💬 YOUR TURN:** You open `index.html` via `file://` and the socket never connects. First fix?
+
+<details>
+<summary>Answer</summary>
+
+Serve it from the **HTTP server** (`http://localhost:3000`). Same-origin Socket.IO script + handshake expect a real origin, not a file path.
+
+</details>
+
+> **‼️ CAUTION:** Mixing string payloads and `{ id, text }` objects without matching the client `textContent` line looks like “sockets are broken.” Match both sides.
+
+### 5. Lab Brief — Imperfect and Honest (~2m)
+
+If Make Chat is half done, finish the core path before inventing a second app. Challenge MVP can be chat *or* something else realtime — whiteboard inspiration is fine. We skip polishing reconnect tonight unless you are ahead.
 
 <!-- > -->
 
-### Advantages of WebSockets
+## [**10m**] 🌴 Break
 
-- Allow for increased collaboration around the world.
-- Enable increased interactivity in web applications and browser-based video games.
-- Bi-directional, real-time communication.
-- Can both send and receive data from the browser.
-- Implementations generally do not use `XMLHttpRequest`, and as such, headers are not sent every-time we need to get more information from the server. reducing the expensive data loads being sent to the server.
-- WebSockets can transmit both binary data and UTF-8.
-- Can respond and invoke any number of custom events; event data can be sent or received by the client, the server, or both.
-- Can be implemented in a secure fashion using WSS, which also improves the reliability of message receipt.
+Leave `node` running if you want. Stretch. Come back ready to ship a visible slice.
 
 <!-- > -->
 
-### Disadvantages of WebSockets
+## [**20m**] 💻 Activity 1: Finish Make Chat Core Path
 
-- Belong in apps that intend to persist over a lengthy session; might be overkill for small applications.
-- Can fail in many corporate environments due to packet-inspecting firewalls and other malware blocking policies _(SophosXG Firewall, WatchGuard, McAfee Web Gateway)_
-  - When connections are terminated, WebSockets don’t automatically recover.
-  - This is something you need to implement yourself.
-  - The reason why there are many client-side libraries in existence.
-- Browsers older than 2011 don't support WebSocket connections.
+> **✅ DONE WHEN:** Two browser tabs on `http://localhost:3000` share a message, handlers live in a module (or you are one clear step from extracting), and the terminal shows connect + at least one event.
 
-<!-- > -->
+1. Open your Day 6 Make Chat folder (or restart from [Socket.IO chat getting started](https://socket.io/get-started/chat) on Express 5 + CJS).
+2. Confirm `http.createServer(app)` + `new Server(server)` + `server.listen(3000)`.
+3. Confirm client uses `/socket.io/socket.io.js` and `const socket = io();` — not `file://`.
+4. Get **two tabs** updating. Prefer `io.emit` or the broadcast-and-append pattern — pick one and stick to it.
+5. If handlers are still inline, extract `registerChatHandlers(io)` into `sockets/chat.js` and `require` it from the entry file.
 
-### Modern Alternatives to WebSockets
-
-For **one-directional** data, where you **need to update the client but not receive information in return**, you may opt for:
-
-- HTTP Requests _(just like usual)_
-- Server Sent Events (SSEs)
-- REST Hooks
-- [Amazon SQS: Message Queuing Service](https://aws.amazon.com/sqs/)
-
-Many of these techniques are **quick to implement** and generally **more approachable to code** compared to WebSockets.
+> **📈 TIP:** Unique `package.json` `"name"` — not `socket.io` / `express` — avoids install confusion.
+> **FINISHED EARLY?** Add a connect/disconnect system line, or a `{user} is typing` stretch from the official homework list.
 
 <!-- > -->
 
-## [**15m**] 🌴 **BREAK** {docsify-ignore}
+## [**30m**] 💻 Activity 2: Challenge MVP or Whiteboard Inspiration
+
+> **✅ DONE:** You either (A) have a started challenge MVP with one realtime behavior beyond the tutorial echo, or (B) have a written 5-line plan + first commit toward [`Challenges/Websockets.md`](../Challenges/Websockets.md). Chat again is fine; a different realtime MVP is fine.
+
+1. Skim [`Challenges/Websockets.md`](../Challenges/Websockets.md). Note the MVP bar for full credit.
+2. Pick **one** direction:
+   - Extend Make Chat (nicknames, rooms sketch, typing, presence)
+   - Use inspiration from [socket.io whiteboard demo](https://socket.io/demos/whiteboard/) / [examples/whiteboard](https://github.com/socketio/socket.io/tree/master/examples/whiteboard) — draw events over the socket
+3. Write the done state in one sentence at the top of your notes before coding.
+4. Ship the smallest slice that proves two-way traffic for *your* feature.
+5. Homework: finish the challenge after hours if the MVP is not complete tonight.
+
+
+> **‼️ WATCH OUT:** Do not start a new framework. Same Express + Socket.IO stack as Day 6.
+> **FINISHED EARLY?** Trade a 60s demo with a teammate: show the two-client proof.
 
 <!-- > -->
 
-## [**60m**] 💻 **Activity**: Tutorial and Challenge Time
+## [**5m**] Wrap Up
 
-1. First, complete the Make Chat Tutorial
-2. Then, complete the [WebSockets Challenge](Challenges/Websockets.md) for homework.
-   - If you don't want to make a chat application again, that's OK!
-   - Create any MVP that uses WebSockets to earn full credit!
-   - Check out this [Whiteboard](https://socket.io/demos/whiteboard/) and the [socket.io/examples/whiteboard codebase](https://github.com/socketio/socket.io/tree/master/examples/whiteboard) for more inspiration.
+> **📈 TIP:** One feature that works on two clients beats five half-wired events.
+
+Session takeaways:
+
+1. Poll when rare/simple; **SSE** for one-way push; **WS** when both sides talk.
+2. Firewalls and drops → **reconnect UX** is part of the product.
+3. Socket.IO still mounts on **`http.Server`**; emit audience still matters.
+4. Challenge path: [`Challenges/Websockets.md`](../Challenges/Websockets.md) — finish after hours if needed.
+
+Optional notes card:
+
+```text
+Shipped today:
+Stuck on:
+Next session first 15m:
+```
 
 <!-- > -->
 
-## [**05m**] 🔄 **Recap**: Today's Takeaways
+## Additional Resources
 
-- WebSockets require an HTTP server (Express) and a WS server (SocketIO).
-- WebSockets are generally used in conjunction with a web-based front end written in HTML / CSS / JS.
-- Often, the same framework provides libraries that both the front and back end can utilize: SocketIO, SockJS, etc. These libraries can also patch a number of browser compatibility concerns.
+1. **[Socket.IO — Get started (chat)](https://socket.io/get-started/chat)** — Express + `http.Server` + emit path.
+2. **[Socket.IO — Server initialization](https://socket.io/docs/v4/server-initialization/)** — why `app.listen` fails for Socket.IO.
+3. **[Socket.IO — Emitting events](https://socket.io/docs/v4/emitting-events/)** — audiences, acknowledgements, timeout.
+4. **[MDN — WebSockets API](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API)** — native WS / WSS.
+5. **[javascript.info — Long polling](https://javascript.info/long-polling)** — hold-until-data pattern.
+6. **[Ably — WebSockets vs SSE](https://ably.com/blog/websockets-vs-sse)** — one-way vs two-way choice.
+7. **[Feathers — HTTP vs WebSockets performance](https://blog.feathersjs.com/http-vs-websockets-a-performance-comparison-da2533f13a77)** — warm-up article.
+8. **[Challenge — Websockets](../Challenges/Websockets.md)** — course challenge brief.
 
-<!-- > -->
+## For Curriculum Authors
 
-<!-- omit in toc -->
-## 📚 Resources & Credits
+<details>
+<summary>For Curriculum Authors</summary>
 
-- [XMLHttpRequest](https://hpbn.co/xmlhttprequest/#xhrreq)
-- [WebSockets for fun and profit - Stack Overflow Blog](https://stackoverflow.blog/2019/12/18/websockets-for-fun-and-profit/)
-- [WebSockets vs Server-Sent Events | Ably Blog: Data in Motion](https://ably.com/blog/websockets-vs-sse)
-- [Long Polling in JavaScript](https://javascript.info/article/long-polling/longpoll/)
-- [Stop Polling and Consider Using REST Hooks | Nordic APIs |](https://nordicapis.com/stop-polling-and-consider-using-rest-hooks/)\
-- [Using WebSockets on Heroku with Node.js | Heroku Dev Center](https://devcenter.heroku.com/articles/node-websockets)
+### In Class
+
+| | |
+| --- | --- |
+| **Next action** | Agenda → Attendance → Warm Up article/table → TT tradeoffs → lab. |
+| **Done when** | At least one two-tab realtime demo in the room, or a clear written MVP plan per person. |
+
+- Warm-up does not need breakouts; chat answers are enough.
+- Behind at ~0:35? Cut alternatives table detail; protect Activity time.
+- Do not require the full challenge tonight — Activity 2 gate is a started MVP or a 5-line plan + first commit.
+
+### Facilitator Notes
+
+- Continuity with Day 6: same stack, same `http.Server` rule, same emit vocabulary.
+- Prefer speakable TT; one failure story (firewall / no reconnect) beats a long disadvantages list.
+- Keep ASK AUDIENCE pulses; they replace digressions.
+- Whiteboard demo is optional inspiration — do not force a canvas app on everyone.
+
+### Expert Follow-Ups
+
+- Optional after-session: Socket.IO rooms; sticky sessions / Redis adapter (name only unless asked).
+- Re-check Socket.IO current release notes day-of if pinning versions in a handout.
+
+</details>
