@@ -1,5 +1,5 @@
-<!-- Run as a slideshow: reveal-md Lessons/Lesson1.md -w -->
-# Sending Emails (Transactional) — Day 5
+<!-- Run as a slideshow: reveal-md Lessons/Emails.md -w -->
+# Emails
 
 ⭐️ **GOAL:** Leave able to pick a 2026 provider, keep secrets server-side, send HTML+text via Nodemailer (or Resend SDK), and talk deliverability without hand-waving.
 
@@ -9,9 +9,9 @@
 - [[**5m**] Attendance &amp; Announcements](#5m-attendance--announcements)
 - [[**5m**] ☀️ Warm Up](#5m-️-warm-up)
 - [[**40m**] 📚 TT: Overview](#40m--tt-overview)
-- [[**15m**] 💻 Activity 1](#15m--activity-1)
+- [[**15m**] 💻 Activity 1: MVP Send](#15m--activity-1-mvp-send)
 - [[**10m**] 🌴 Break](#10m--break)
-- [[**30m**] 💻 Activity 2](#30m--activity-2)
+- [[**30m**] 💻 Activity 2: Modular Mailer + Express](#30m--activity-2-modular-mailer--express)
 - [[**15m**] Stretch — Pete’s purchase hook](#15m-stretch--petes-purchase-hook)
 - [[**5m**] Wrap Up](#5m-wrap-up)
 
@@ -65,7 +65,6 @@ Think and jot (30s), then unmute or chat: name one transactional email you got t
 
 **Next action:** Destination → providers → Nodemailer abstraction → secrets → templates → auth headers → JS async/error shapes.  
 **Done when:** You can sketch “browser → Express → mailer → provider” and say where the API key lives.  
-**≤2m next after TT:** Open Activity 1; pick Resend *or* Ethereal.
 
 ### 1. Transactional vs marketing (~4m)
 
@@ -105,8 +104,8 @@ Whiteboard the field; **lab primary = Resend**.
 **Nodemailer** = transport **abstraction**. You configure *how* to talk (SMTP / provider transport); your app code stays `transporter.sendMail({...})`.
 
 ```js
-// Shape only — secrets come from env
-import nodemailer from 'nodemailer';
+// Shape only — secrets come from env (CJS to match Pete's / Pattern A)
+const nodemailer = require('nodemailer');
 
 const transporter = nodemailer.createTransport({
   host: 'smtp.resend.com',
@@ -121,7 +120,7 @@ const transporter = nodemailer.createTransport({
 
 **Alternate (same provider, SDK):** `import { Resend } from 'resend'` → `await resend.emails.send({...})` returns `{ data, error }` (doesn’t throw on API errors). Cover both shapes; pick **one** for the MVP so nobody bikesheds.
 
-**Pete’s Pets note:** challenge `P06` stays **stretch / after-hours** on Mailgun tonight. Live primary = Resend/Ethereal. `nodemailer-mailgun-transport` last publish 2022 — Wave-2 rewrite to `mailgun.js`/HTTP; optional later `MAIL_PROVIDER=` — **out of scope** for Day 5 live.
+**Pete’s Pets note:** challenge `P06` stays **stretch / after-hours** on Mailgun tonight. Live primary = Resend/Ethereal. `nodemailer-mailgun-transport` last publish 2022 — Wave-2 rewrite to `mailgun.js`/HTTP; optional later `MAIL_PROVIDER=` — **out of scope** for live class.
 
 ### 3. Secrets — server-side only (~6m)
 
@@ -323,7 +322,7 @@ Terminal shows a `messageId` **or** an Ethereal preview URL from one successful 
 
 <!-- > -->
 
-## [**15m**] 💻 Activity 1
+## [**15m**] 💻 Activity 1: MVP Send
 
 **MVP send.** Solo · visible checkpoint · artifact.
 
@@ -355,7 +354,6 @@ Terminal shows a `messageId` **or** an Ethereal preview URL from one successful 
 3. Nodemailer SMTP **or** `resend` SDK — one path only
 4. Log `messageId` / `data.id`
 
-**MVP definition of done (≤15m):** one successful send logged. Templates polish waits for Activity 2.
 
 If you finish early, help a peer who’s stuck.
 
@@ -365,7 +363,7 @@ If you finish early, help a peer who’s stuck.
 
 <!-- > -->
 
-## [**30m**] 💻 Activity 2
+## [**30m**] 💻 Activity 2: Modular Mailer + Express
 
 **Modular mailer + Express.** You do. Same topic, less scaffolding.
 
@@ -435,7 +433,6 @@ Takeaways to say out loud:
 4. Send **html + text**; know SPF/DKIM/DMARC as interview vocabulary.
 5. **Await + surface failures** — JS that lies about send success is worse than no email.
 
-**≤2m wrap sticky (optional):**
 
 ```text
 Shipped today:
@@ -472,7 +469,6 @@ Tomorrow's first 15m:
 | --- | --- |
 | **Next action** | Open this file → skim the agenda table → start Why / Objectives at 4:00. |
 | **Done when** | You can send a transactional message from the server, explain why the API key never touches the browser, and name SPF/DKIM/DMARC in one on-the-job sentence each. |
-| **≤2m next** | Optional standup sticky in your notes: Feeling / Behind\|On track\|Ahead / Today’s MVP. |
 
 ```text
 Feeling (1 word):
