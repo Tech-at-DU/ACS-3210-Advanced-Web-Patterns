@@ -46,7 +46,7 @@ Follow [Michele Nasti](https://michelenasti.com/)'s guide _"[Let's write our sim
 
 ### What is NPM?
 
-<img src="Lessons/assets/package.png" width="400" />
+<img src="assets/package.png" width="400" />
 
 NPM is a company that promotes open source development for all things JavaScript! What they're most known for though, is the **Node Package Manager** (also NPM) which allows for the easy installation of JavaScript modules.
 
@@ -60,7 +60,7 @@ From [time manipulation](https://www.npmjs.com/package/date-fns) to [web framewo
 
 ### What Happens When I Install a Package?
 
-<img src="Lessons/assets/install.jpg" width="400" />
+<img src="assets/install.jpg" width="400" />
 
 You install packages with NPM by running `npm install <package_name>`. If the folder doesn't already exist, a `node_modules` folder will be added to your project, and all modules installed by NPM will live there.
 
@@ -72,7 +72,7 @@ What you may find though is that a package may have dependencies that it needs t
 
 What if your buddy wants to clone or fork your project? He'll have to manually install all those modules. That's a drag.
 
-An easy way to fix this is by having a `package.json` file, which lists all modules that a project needs in order to run. Think of it like a dependency list!
+An easy way to fix this is by having a `package.json` file, which lists all modules that a project needs to run. Think of it like a dependency list!
 
 A `package.json` file has two required fields:
 
@@ -146,7 +146,7 @@ Now you can call anything in the [lodash library](https://lodash.com) by using t
 
 #### Why Should I Deploy a Module?
 
-<img src="Lessons/assets/open_source.png" width="400" />
+<img src="assets/open_source.png" width="400" />
 
 * Help out other programmers that may need to solve a similar problem
 * Contribute to Open Source and participate in the community
