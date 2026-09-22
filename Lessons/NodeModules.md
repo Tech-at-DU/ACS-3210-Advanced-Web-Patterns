@@ -72,7 +72,7 @@ What you may find though is that a package may have dependencies that it needs t
 
 What if your buddy wants to clone or fork your project? He'll have to manually install all those modules. That's a drag.
 
-An easy way to fix this is by having a `package.json` file, which lists all modules that a project needs to run. Think of it like a dependency list!
+An easy way to fix this is by having a `package.json` file, which lists all modules that a project needs in order to run. Think of it like a dependency list!
 
 A `package.json` file has two required fields:
 
