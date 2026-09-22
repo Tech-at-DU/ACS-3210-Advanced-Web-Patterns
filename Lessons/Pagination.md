@@ -90,7 +90,7 @@ You may be asking, "why are we enhancing an existing project instead of creating
     The answer (do not click!)
   </summary>
   Use pagination to only return the first 20 records like .... Google does!
-  <img src='google.png' />
+  <img src='assets/google.png' />
 </details>
 
 <!-- v -->
