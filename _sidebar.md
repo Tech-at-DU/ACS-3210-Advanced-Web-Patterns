@@ -5,7 +5,6 @@
   - [Payment Gateways](Lessons/Payments.md)
   - [Uploading Images on AWS](Lessons/UploadS3.md)
   - [Intro to Serverless](Lessons/ServerlessIntro.md)
-  - [Serverless Architecture](Lessons/ServerlessIRL.md)
   - [Serverless IRL](Lessons/ServerlessIRL.md)
   - [Intro to WebSockets](Lessons/WebSocketsIntro.md)
   - [Working with WebSockets](Lessons/WebSocketsIRL.md)
