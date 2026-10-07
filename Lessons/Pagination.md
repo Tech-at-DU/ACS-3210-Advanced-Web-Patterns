@@ -7,8 +7,6 @@
 
 1. [🏆 Learning Outcomes](#%F0%9F%8F%86-learning-outcomes)
 1. [👋 Welcome to Class](#%F0%9F%91%8B-welcome-to-class)
-1. [📁 Intro Project](#%F0%9F%93%81-intro-project)
-   1. [Project Overview](#project-overview)
 1. [Existing Vs New Projects](#existing-vs-new-projects)
 1. [Pagination](#pagination)
    1. [Why do we need pagination?](#why-do-we-need-pagination%3F)
@@ -29,38 +27,7 @@ By the end of this lesson, you should be able to...
 
 ## 👋 Welcome to Class
 
-Instructor will walk through the [syllabus](https://make.sc/bew2.1) and answer questions about the course.
-
-**Students**, remember to join the following:
-
-1. Course Slack channel, `##bew-2-1-web-patterns`!
-1. Gradescope: **INSERT LINK HERE**
-
-<!-- > -->
-
-## 📁 Intro Project
-
-Wait a minute, a project _already?!_
-
-**How Not To React:**
-
-![fire_spongebob](assets/fire_spongebob.gif)
-
-<!-- v -->
-
-**Instead:**
-
-![do_it](assets/do_it.gif)
-
-<!-- v -->
-
-### Project Overview
-
-**TODO:**
-
-- Add project description
-- Where code will be written
-
+Instructor will walk through the [syllabus](../README.md) and answer questions about the course.
 
 <!-- > -->
 
