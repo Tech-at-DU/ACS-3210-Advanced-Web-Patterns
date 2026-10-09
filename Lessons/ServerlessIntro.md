@@ -7,33 +7,13 @@
 <!-- omit in toc -->
 ## ⏱ Agenda {docsify-ignore}
 
-- [[**10m**] ✅ **Admin**: Gradescope & Tutorial Repo](#10m-%e2%9c%85-admin-gradescope--tutorial-repo)
-- [[**15m**] ☀️ **Warm Up**: Standup Meeting (Breakout)](#15m-%e2%98%80%ef%b8%8f-warm-up-standup-meeting-breakout)
-- [[**20m**] 💬 **TT**: Topic](#20m-%f0%9f%92%ac-tt-topic)
-- [[**10m**] 🌴 **BREAK 1** {docsify-ignore}](#10m-%f0%9f%8c%b4-break-1-docsify-ignore)
-- [[**20m**] 💻 **Activity**: Title](#20m-%f0%9f%92%bb-activity-title)
-- [[**10m**] 🌴 **BREAK 2** {docsify-ignore}](#10m-%f0%9f%8c%b4-break-2-docsify-ignore)
-- [[**10m**] 🔄 **Recap**: Today's Takeaways](#10m-%f0%9f%94%84-recap-todays-takeaways)
-
-<!-- > -->
-
-<!-- omit in toc
-## 🏆 Objectives
-
-|   Level   | Verbs |
-| --------- | ----- |
-| 6: Create | design, formulate, build, invent, create, compose, generate, derive, modify, develop |
-| 5: Evaluate | choose, support, relate, determine, defend, compare, contrast, justify, support, convince, select |
-| 4: Analyze | classify, break down, categorize, analyze, diagram, illustrate, criticize, simplify, associate |
-| 3: Apply | calculate, predict, apply, solve, illustrate, use, demonstrate, determine, model, perform, present |
-| 2: Understand | describe, explain, paraphrase, restate, summarize, contrast, interpret, discuss |
-| 1: Remember | list, recite, outline, define, name, match, quote, recall, identify, label, recognize |
--->
-
-## [**10m**] ✅ **Start of Class**: Gradescope
-
-1. **Add BEW 2.1 on Gradescope** by entering the course entry code: `4PP4KX` or visiting <https://make.sc/bew2.1-gradescope>.
-1. **Submit your tutorial repo so far** by clicking <https://www.gradescope.com/courses/207186/assignments/830274>.
+- [[**15m**] ☀️ Warm Up: Standup Meeting (Breakout)](#15m-️-warm-up-standup-meeting-breakout)
+- [[**15m**] 💻 Activity: Install Serverless CLI](#15m--activity-install-serverless-cli)
+- [[**20m**] 💬 TT: Intro to Serverless](#20m--tt-intro-to-serverless)
+- [[**10m**] 🌴 BREAK 1](#10m--break-1-docsify-ignore)
+- [[**30m**] 💻 Activity: Serverless Hello World](#30m--activity-serverless-hello-world)
+- [[**30m**] 💻 Activity: Choose Your Own Serverless Adventure](#30m--activity-choose-your-own-serverless-adventure)
+- [[**10m**] 🔄 Recap: Q+A & Homework](#10m--recap-qa--homework)
 
 <!-- > -->
 
@@ -87,7 +67,7 @@ Once it's working, modify the code to return you and your partner's names instea
 
 - **OPTION 3**: [**STRETCH CHALLENGE**] Take an existing Node and Express project and convert it to use the Serverless framework. Use [Converting an existing Express application](https://www.serverless.com/blog/serverless-express-rest-api#converting-an-existing-express-application) to guide you!  _(up to 3 per team)_
 
-When done, submit the deployed URL to your full stack application on [Gradescope](https://make.sc/bew2.1-gradescope).
+When done, submit the deployed URL to your full stack application on [Gradescope](https://www.gradescope.com/).
 
 <!-- > -->
 
