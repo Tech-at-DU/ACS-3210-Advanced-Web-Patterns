@@ -25,7 +25,7 @@ In this course students deepen their understanding of the web and implement adva
 
 ## Prerequisites
 
-- [BEW 1.3](http://make.sc/bew1.3)
+- [ACS 1220](https://github.com/Tech-at-DU/ACS-1220-Authentication-and-Associations)
 
 ## Course Specifics
 
