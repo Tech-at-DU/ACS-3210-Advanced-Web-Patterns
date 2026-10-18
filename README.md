@@ -126,7 +126,7 @@ To pass this course you must meet the following requirements:
 [Sending Emails]: Lessons/Emails.md
 [Intro to WebSockets]: Lessons/WebSocketsIntro.md
 [Working with WebSockets]: Lessons/WebSocketsIRL.md
-[Serverless Architecture]: Lessons/ServerlessIRL.md
+[Serverless Architecture]: Lessons/ServerlessIntro.md
 [Serverless IRL]: Lessons/ServerlessIRL.md
 [Building and Deploying a Node Module]: Lessons/NodeModules.md
 [James Beswick]: https://aws.amazon.com/blogs/compute/author/jbeswick/
