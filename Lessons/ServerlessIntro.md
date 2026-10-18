@@ -1,5 +1,4 @@
-<!-- Run this slideshow via the following command: reveal-md README.md -w -->
-<!-- .slide: data-background="./../Slides/images/header.svg" data-background-repeat="none" data-background-size="40% 40%" data-background-position="center 10%" class="header" -->
+<!-- Run as a slideshow: reveal-md Lessons/ServerlessIntro.md -w -->
 # 📈 Introduction to Serverless Architecture
 
 <!-- > -->
