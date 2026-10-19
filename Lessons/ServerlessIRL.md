@@ -29,8 +29,6 @@
 
 ⭐️ **GOAL:** Write down **at least three questions** you want to ask an AWS serverless expert. Pick your favorite and post it in the class Slack channel before the talk starts.
 
-<p align="center"><img src="https://pbs.twimg.com/profile_images/1165718285754753025/OrGcUHER_400x400.jpg" height="250"></p>
-
 **James Beswick** is a Senior Developer Advocate on the AWS Serverless team.
 
 - AWS Blog: [AWS Compute Blog](https://aws.amazon.com/blogs/compute/author/jbeswick/)

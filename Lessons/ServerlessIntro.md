@@ -38,8 +38,6 @@ Break students into groups of 6 for a standup meeting on tutorial progress.
 
 ## [**20m**] 💬 **TT**: Intro to Serverless
 
-- Go through [Comparisons: Serverless vs. other tools](https://www.serverless.com/learn/comparisons/)
-
 <!-- > -->
 
 ## [**10m**] 🌴 **BREAK 1** {docsify-ignore}
@@ -52,7 +50,7 @@ First, be sure to set up your credentials for AWS by following along with this v
 
 <iframe height="720" src="https://www.youtube.com/embed/KngM5bfpttA" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-Then, get hands-on with your first serverless application by running the [Hello World Node.js Example on AWS](https://www.serverless.com/framework/docs/providers/aws/examples/hello-world/node/) in your own terminal.
+Then, get hands-on with your first serverless application by following [Setting Up Serverless Framework With AWS](https://www.serverless.com/framework/docs/getting-started) in your own terminal.
 
 Once it's working, modify the code to return you and your partner's names instead!
 
@@ -81,7 +79,6 @@ Remember, the assignment above is due next Monday before class! Finish it to pre
 
 - [The Serverless Application Framework | Serverless.com](https://www.serverless.com/)
 - [Serverless Framework Documentation](https://www.serverless.com/framework/docs/)
-- [Hello World Node.js Example on AWS](https://www.serverless.com/framework/docs/providers/aws/examples/hello-world/node/)
+- [Setting Up Serverless Framework With AWS](https://www.serverless.com/framework/docs/getting-started)
 - [Deploy a REST API using Serverless, Express and Node.js](https://www.serverless.com/blog/serverless-express-rest-api/)
-- [Full-Stack Application Development on AWS (Free Video Course)](https://www.serverless.com/learn/courses/full-stack-application-development-on-aws)
 - [Serverless Examples Directory (90+ Examples w/ Filters)](https://www.serverless.com/examples/)
